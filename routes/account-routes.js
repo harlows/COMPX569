@@ -39,4 +39,10 @@ router.post("/create", async function (req, res) {
     }    
 });
 
+// Route handler for username checking
+router.get("/username", function (req, res) {
+    const { username } = req.query;
+    
+});
+
 module.exports = router;

@@ -10,7 +10,7 @@ const port = process.env.EXPRESS_PORT || 3000;
 
 // Setup Handlebars
 app.engine("handlebars", handlebars.create({
-    defaultLayout: null
+    defaultLayout: "main"
 }).engine);
 app.set("view engine", "handlebars");
 
@@ -20,7 +20,13 @@ app.use(express.json({}));
 
 
 // TODO: Your app here
+// Make the "public" folder available statically
+const path = require("path");
+app.use("/public", express.static(path.join(__dirname, "public")));
 
+// Setup our routes
+const account = require("./routes/account-routes.js");
+app.use("/account", account);
 
 app.listen(port, function () {
     console.log(`Web final project listening on http://localhost:${port}/`);

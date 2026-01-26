@@ -1,0 +1,60 @@
+* {
+    font-family: Verdana, Geneva, sans-serif;
+    color: #706F6F;
+    line-height: 23px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: 20px 20px;
+}
+
+h1, h2, h3 {
+    color: #231F20;
+}
+
+h1 {
+    font-size: 23px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 17px;
+}
+
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.flex-col, .flex-row {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.mb {
+    margin-bottom: 10px;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-sb {
+    justify-content: space-between;
+}

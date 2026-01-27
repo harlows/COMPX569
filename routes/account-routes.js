@@ -4,6 +4,8 @@ const router = express.Router();
 // The DAO that handles CRUD operations for users.
 const userDao = require("../modules/users-dao.js");
 const {createUser} = require("../modules/users-dao");
+const {checkUsername} = require("../modules/users-dao");
+
 
 router.get("/login", function (req, res) {
 
@@ -39,10 +41,16 @@ router.post("/create", async function (req, res) {
     }    
 });
 
-// Route handler for username checking
-router.get("/username", function (req, res) {
+// Route handler for checking if a username exists
+router.get("/check-username", async function (req, res) {
     const { username } = req.query;
-    
+    console.log("Checking username:", username);
+
+    const user = await userDao.checkUsername(username);
+    console.log("User from DB:", user);
+
+    res.json({ available : !user });
+
 });
 
 module.exports = router;

@@ -14,7 +14,18 @@ async function createUser(user) {
     return user;
 }
 
+// Find whether a username is already taken
+async function checkUsername(username) {
+    const db = await database;
+
+    const result = await db.query("select * from users where username = ? limit 1",
+    [username]);
+    
+    return result[0] || null;
+}
+
 // Export functions.
 module.exports = {
-    createUser
+    createUser,
+    checkUsername
 };

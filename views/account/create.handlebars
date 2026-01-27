@@ -1,3 +1,18 @@
+<script>
+  window.addEventListener("load", function () {
+    const usernameInput = document.querySelector("#txtUsername");
+
+    usernameInput.addEventListener("input", async function () {
+        const username = usernameInput.value;
+
+        const response = await fetch(
+          `/account/check-username?username=${encodeURIComponent(username)}`
+        );
+        const data = await response.json();
+        console.log("Username available:", data.available);
+    });
+  });
+</script>
 <div class="container">
 
   <h1>New Account</h1>

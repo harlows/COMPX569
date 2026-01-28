@@ -18,7 +18,10 @@
 
     async function checkUsername() {
         const username = usernameInput.value;
-
+        if (username === '') {
+          check.textContent = '';
+          return;
+        }
         const response = await fetch(
           `/account/check-username?username=${username}`
         );
@@ -35,6 +38,7 @@
     // Now use the debounced function as the event handler
     usernameInput.addEventListener("input", debouncedCheckUsername);
   });
+
 </script>
 
 <div class="container">
@@ -48,8 +52,14 @@
     </div>
 
     <div class="flex-col mb">
-      <label for="txtPassword">Password:</label>
-      <input type="password" name="password" id="txtPassword" required>
+      <label for="txtPassword1">Password:</label>
+      <input type="password" name="password1" id="txtPassword1" required>
+    </div>
+
+    <div class="flex-col mb">
+      <label for="txtPassword2">Confirm Password:</label>
+      <span id="password-match"></span>
+      <input type="password" name="password2" id="txtPassword2" required>
     </div>
 
     <div class="flex-col mb">
@@ -57,18 +67,47 @@
       <input type="text" name="name" id="txtName" required>
     </div>
 
-    <div class="flex-col mb"></div>
+    <div class="flex-col mb">
       <label for="txtDob">Date of birth:</label>
       <input type="date" name="dob" id="txtDob" required>
     </div>
     Description:
-    <div class="flex-col mb"></div>
+    <div class="flex-col mb">
       <textarea name="description" maxlength="400"></textarea>
     </div>
 
     <div class="flex-row justify-sb align-center">
-      <button type="submit">Create account</button>
+      <button type="submit" id="btnSubmit" disabled>Create account</button>
     </div>
   </form>
 
 </div>
+
+<script>
+// Check passwords match
+const password1 = document.querySelector("#txtPassword1");
+const password2 = document.querySelector("#txtPassword2");
+const match = document.querySelector("#password-match");
+const submitBtn = document.querySelector("#btnSubmit");
+
+function checkPasswords () {
+  password = password1.value;
+  confirm = password2.value;
+
+  if (password === "" || confirm === "") {
+    match.textContent = "";
+    submitBtn.disabled = true;
+    return;
+  }
+  
+  if (password === confirm) {
+    match.textContent = "Passwords match";
+    submitBtn.disabled = false;
+  } else {
+    match.textContent = "Passwords do not match";
+    submitBtn.disabled = true;
+  }
+};
+password1.addEventListener("input", checkPasswords);
+password2.addEventListener("input", checkPasswords);
+</script>

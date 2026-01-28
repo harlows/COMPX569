@@ -48,7 +48,7 @@ router.get("/check-username", async function (req, res) {
 
     const user = await userDao.checkUsername(username);
     console.log("User from DB:", user);
-
+    // if user returns null then username is available
     res.json({ available : !user });
 
 });

@@ -18,6 +18,13 @@ app.set("view engine", "handlebars");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({}));
 
+// Setup express-session
+const session = require("express-session");
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: "COMPX569"
+}));
 
 // TODO: Your app here
 // Make the "public" folder available statically
@@ -27,6 +34,9 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 // Setup our routes
 const account = require("./routes/account-routes.js");
 app.use("/account", account);
+
+const appRouter = require("./routes/application-routes.js");
+app.use(appRouter);
 
 app.listen(port, function () {
     console.log(`Web final project listening on http://localhost:${port}/`);

@@ -8,6 +8,7 @@ create table if not exists users (
     name varchar(64),
     dob date,
     description varchar(400),
+    avatar varchar(100),
     primary key (id),
     constraint unique_username unique (username)
 );

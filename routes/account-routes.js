@@ -1,4 +1,5 @@
 const express = require("express");
+const argon2 = require("argon2");
 const router = express.Router();
 
 // The DAO that handles CRUD operations for users.
@@ -30,8 +31,11 @@ router.get("/create", function (req, res) {
 
 router.post("/create", async function (req, res) {
     // Get form data
-    const { username, password, name, dob, description } = req.body;
-    const user = { username, password, name, dob, description };
+    const { username, password1, name, dob, description } = req.body;
+    // Hash password
+    const passwordHash = await argon2.hash(password1);
+
+    const user = { username, password1: passwordHash, name, dob, description };
     
     // Create new user
     const newUser = await userDao.createUser(user);

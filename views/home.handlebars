@@ -1,7 +1,7 @@
 <div class="container">
 
   <h1>Hello, {{#if user}}{{user.name}}{{else}}welcome{{/if}}!</h1>
-  <p>This is your homepage!</p>
+  <h2>Latest articles</h2>
 
   <table>
     {{#each allArticles}}
@@ -17,7 +17,9 @@
       <tr><td>{{content}}</td></tr>
     {{/each}}
   </table>
+    <p><a href="/articles/new">New Article</a></p>
     <p>Click <a href="/account/logout">here</a> to log out.</p>
+    <p>Click <a href="/account/profile">here</a> to edit your profile.</p>    
   {{else}}
     <p>Click <a href="/account/login">here</a> to log in.</p>
     {{/if}}

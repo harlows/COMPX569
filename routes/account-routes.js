@@ -2,6 +2,8 @@ const express = require("express");
 const argon2 = require("argon2");
 const router = express.Router();
 
+const middleware = require("../middleware/auth.js");
+
 // The DAO that handles CRUD operations for users.
 const userDao = require("../modules/users-dao.js");
 const {createUser} = require("../modules/users-dao");
@@ -89,6 +91,11 @@ router.post("/create", async function (req, res) {
     if (newUser) {
         res.redirect("./login?message=Account created successfully!");
     }    
+});
+
+// Route handler to display profile page if logged in
+router.get("/profile", middleware.verifyAuthenticated, function (req, res) {
+    res.render("account/profile");
 });
 
 // Route handler for checking if a username exists

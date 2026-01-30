@@ -22,6 +22,10 @@ router.get("/", async function(req, res) {
     });
 });
 
+router.get("/articles/new", middleware.verifyAuthenticated, function (req, res) {
+    res.render("articles/new");
+});
+
 router.post("/articles", async function (req, res) {
 
     // Get the data from the database

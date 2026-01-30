@@ -2,5 +2,12 @@
 
   <h1>Hello, {{user.name}}!</h1>
   <p>This is your homepage!</p>
+
+  <table>
+    {{#each articles}}
+      <tr><td>{{title}}</td></tr>
+      <tr><td>{{content}}</td></tr>
+    {{/each}}
+  </table>
   <p>Click <a href="/account/logout">here</a> to log out.</p>
 </div>

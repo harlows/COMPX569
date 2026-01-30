@@ -1,3 +1,13 @@
 <div class="container">
     <h1>Profile</h1>
+    
+    {{#if user}}
+    <form action="/account/delete" method="post"
+            onsubmit="return confirm('This will permanently delete your account. Continue?');">
+        <button type="submit" class="danger">
+        Delete my account
+        </button>
+    </form>
+    {{/if}}
+
 </div>

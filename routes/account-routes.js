@@ -98,6 +98,20 @@ router.get("/profile", middleware.verifyAuthenticated, function (req, res) {
     res.render("account/profile");
 });
 
+// Route handler for user account deletion
+router.post("/delete", middleware.verifyAuthenticated, async function (req, res) {
+
+   const user = req.session.user.id;
+
+   await userDao.deleteUser(user);
+
+   // Log user out by destroying their session
+   req.session.destroy( () => {
+    res.redirect("./login?message=Your account has been deleted.");
+   })
+
+});
+
 // Route handler for checking if a username exists
 router.get("/check-username", async function (req, res) {
     const { username } = req.query;

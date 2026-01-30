@@ -1,4 +1,8 @@
 <div class="container">
+  
+{{#if message}}
+  {{message}}
+{{/if}}
 
   <h1>Hello, {{#if user}}{{user.name}}{{else}}welcome{{/if}}!</h1>
   <h2>Latest articles</h2>

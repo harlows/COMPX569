@@ -24,8 +24,17 @@ async function checkUsername(username) {
     return result[0] || null;
 }
 
+// Delete user with the given id from the database
+// Will delete all user's articles automatically because database schema uses ON DELETE CASCADE
+async function deleteUser(id) {
+    const db = await database;
+
+    await db.query("delete from users where id = ?", [id]);
+}
+
 // Export functions.
 module.exports = {
     createUser,
-    checkUsername
+    checkUsername,
+    deleteUser
 };

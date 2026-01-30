@@ -5,15 +5,20 @@ const middleware = require("../middleware/auth.js");
 const articlesDao = require("../modules/articles-dao.js");
 const {createArticle} = require("../modules/articles-dao");
 
-// Whenever we navigate to /, verify that we're authenticated. If we are, render the home view.
-router.get("/", middleware.verifyAuthenticated, async function(req, res) {
+// Whenever we navigate to /, display all articles and check if we're authenticated.
+router.get("/", async function(req, res) {
     
-    const articles = await articlesDao.getArticles();
-    console.log(articles);
-    
+    const allArticles = await articlesDao.getArticles();
+    let myArticles = [];
+    const user = req.session.user || null; // you're either logged in or not
+
+    if (user) {
+        myArticles = await articlesDao.getArticlesByAuthor(user.id);
+    }
     res.render("home", {
-        user: req.session.user,
-        articles: articles
+        user,
+        allArticles,
+        myArticles
     });
 });
 

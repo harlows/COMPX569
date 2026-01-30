@@ -18,11 +18,24 @@ async function getArticles() {
 
     const articles = await db.query(
         "select title as title, content as content from articles order by created_at");
-    return await articles;
+
+    return articles;
+}
+
+// Get articles by author
+async function getArticlesByAuthor(id) {
+    const db = await database;
+
+    const articles = await db.query(
+        "select title as title, content as content from articles where author_id = ? order by created_at",
+        [id]);
+
+    return articles;
 }
 
 // Export functions
 module.exports = {
     createArticle,
-    getArticles
+    getArticles,
+    getArticlesByAuthor
 };

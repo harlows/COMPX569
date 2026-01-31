@@ -6,8 +6,6 @@ const middleware = require("../middleware/auth.js");
 
 // The DAO that handles CRUD operations for users.
 const userDao = require("../modules/users-dao.js");
-const {createUser} = require("../modules/users-dao");
-const {checkUsername} = require("../modules/users-dao");
 
 // Whenever we navigate to ANY page, make the "user" session object available to the
 // Handlebars engine by adding it to res.locals.
@@ -96,7 +94,7 @@ router.post("/create", async function (req, res) {
 
 // Route handler to display profile page if logged in
 router.get("/profile", middleware.verifyAuthenticated, async function (req, res) {
-    
+    const message = req.session.message;
     // Don't use session data, instead draw from database
     const rows = await userDao.getUserById(req.session.user.id);
     const user = rows[0];
@@ -107,8 +105,27 @@ router.get("/profile", middleware.verifyAuthenticated, async function (req, res)
             dob: user.dob,
             avatar: user.avatar,
             description: user.description
-     }
+     },
+     message
     });
+});
+
+// Route handler to update user profile
+router.post("/profile", middleware.verifyAuthenticated, async function (req, res) {
+    // Get id from session
+    const userId = req.session.user.id;
+    // Get form data
+    const { username, name, dob, description } = req.body;
+    const user = { id: userId, username, name, dob, description };
+
+    // Update user profile
+    const updateUser = await userDao.updateUser(user);
+
+    // Update session details
+    req.session.user.name = name;
+
+    req.session.message = "Profile successfully updated.";
+    res.redirect("./profile");
 });
 
 // Route handler for user account deletion

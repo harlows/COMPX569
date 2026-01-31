@@ -9,11 +9,11 @@
 
     const nameBtn = document.querySelector("#sort-name")
     nameBtn.addEventListener("click", () => sortArticles("username"));
-
+        // Use AJAX to sort articles, then...
         async function sortArticles(sort) {
             const res = await fetch(`/articles?sort=${sort}`);
             const articles = await res.json();
-            
+            // Dynamically rebuild the DOM
             const container = this.document.querySelector("#article-list");
             container.innerHTML = "";
             

@@ -34,6 +34,15 @@ async function checkUsername(username) {
     return result[0] || null;
 }
 
+// Update user's profile
+async function updateUser(user) {
+    const db = await database;
+
+    await db.query("update users set username = ?, name = ?, dob = ?, description = ? where id = ?",
+        [user.username, user.name, user.dob, user.description, user.id]
+    );
+}
+
 // Delete user with the given id from the database
 // Will delete all user's articles automatically because database schema uses ON DELETE CASCADE
 async function deleteUser(id) {
@@ -47,5 +56,6 @@ module.exports = {
     getUserById,
     createUser,
     checkUsername,
+    updateUser,
     deleteUser
 };

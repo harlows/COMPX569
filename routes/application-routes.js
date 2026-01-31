@@ -3,7 +3,6 @@ const router = express.Router();
 
 const middleware = require("../middleware/auth.js");
 const articlesDao = require("../modules/articles-dao.js");
-const {createArticle} = require("../modules/articles-dao");
 
 // Whenever we navigate to /, display all articles and check if we're authenticated.
 router.get("/", async function(req, res) {

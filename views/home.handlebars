@@ -1,3 +1,5 @@
+<script src="/public/js/article-sort.js"></script>
+
 <div class="container">
   
 {{#if message}}
@@ -6,20 +8,26 @@
 
   <h1>Hello, {{#if user}}{{user.name}}{{else}}welcome{{/if}}!</h1>
   <h2>Latest articles</h2>
-
-  <table>
+  <button id="sort-date">Date</button>
+  <button id="sort-title">Title</button>
+  <button id="sort-name">Author</button>
+  <div id="article-list">
     {{#each allArticles}}
+    <article>
       <h3>{{title}} by {{author}}</h3>
       <p>{{content}}</p>
+    </article>
     {{/each}}
-  </table>
+  </div>
   {{#if user}}
   <h2>Your articles</h2>
-    <table>
+
     {{#each myArticles}}
+    <article>
       <h3>{{title}}</h3>
+    </article>
     {{/each}}
-  </table>
+
     <p><a href="/articles/new">New Article</a></p>
     <p>Click <a href="/account/logout">here</a> to log out.</p>
     <p>Click <a href="/account/profile">here</a> to edit your profile.</p>    
@@ -27,3 +35,4 @@
     <p>Click <a href="/account/login">here</a> to log in.</p>
     {{/if}}
 </div>
+

@@ -12,12 +12,15 @@ async function createArticle(article) {
     return article;
 }
 
-// Get all articles from the database ordered by creation date
-async function getArticles() {
+// Get all articles from the database, default sort order is by date
+async function getArticles(sort) {
     const db = await database;
+    let orderBy = "created_at desc";
+    if ( sort === "title") orderBy = "title asc";
+    if ( sort === "username") orderBy = "author asc";
 
     const articles = await db.query(
-        "select title as title, content as content from articles order by created_at");
+        `select u.name as author, a.title as title, a.content as content from articles as a, users as u where a.author_id = u.id order by ${orderBy}`);
 
     return articles;
 }

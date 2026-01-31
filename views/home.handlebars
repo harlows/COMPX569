@@ -9,16 +9,15 @@
 
   <table>
     {{#each allArticles}}
-      <tr><td>{{title}}</td></tr>
-      <tr><td>{{content}}</td></tr>
+      <h3>{{title}} by {{author}}</h3>
+      <p>{{content}}</p>
     {{/each}}
   </table>
   {{#if user}}
   <h2>Your articles</h2>
     <table>
     {{#each myArticles}}
-      <tr><td>{{title}}</td></tr>
-      <tr><td>{{content}}</td></tr>
+      <h3>{{title}}</h3>
     {{/each}}
   </table>
     <p><a href="/articles/new">New Article</a></p>

@@ -22,8 +22,11 @@ router.get("/", async function(req, res) {
     });
 });
 
-router.get("/articles/new", middleware.verifyAuthenticated, function (req, res) {
-    res.render("articles/new");
+// Route to request articles in the sort order passed by URL and respond with json
+router.get("/articles/", async function (req, res) {
+    const { sort } = req.query;
+    const articles = await articlesDao.getArticles(sort);
+    res.json(articles);
 });
 
 router.post("/articles", middleware.verifyAuthenticated, async function (req, res) {
@@ -39,6 +42,10 @@ router.post("/articles", middleware.verifyAuthenticated, async function (req, re
     // Create new article
     const newArticle = await articlesDao.createArticle(article);
     res.redirect("/");
+});
+
+router.get("/articles/new", middleware.verifyAuthenticated, function (req, res) {
+    res.render("articles/new");
 });
 
 module.exports = router;

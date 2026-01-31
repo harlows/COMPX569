@@ -1,5 +1,15 @@
 const database = require("./database.js");
 
+// Get user details from database
+async function getUserById(id) {
+    const db = await database;
+    // Format date to avoid javascript conversion to NZST
+    const result = await db.query(
+        "select id, username, name, date_format(dob, '%Y-%m-%d') as dob, description, avatar from users where id = ?", [id]);
+
+    return result;
+}
+
 // Add user to the database
 async function createUser(user) {
     const db = await database;
@@ -34,6 +44,7 @@ async function deleteUser(id) {
 
 // Export functions.
 module.exports = {
+    getUserById,
     createUser,
     checkUsername,
     deleteUser

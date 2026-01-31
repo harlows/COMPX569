@@ -95,8 +95,20 @@ router.post("/create", async function (req, res) {
 });
 
 // Route handler to display profile page if logged in
-router.get("/profile", middleware.verifyAuthenticated, function (req, res) {
-    res.render("account/profile");
+router.get("/profile", middleware.verifyAuthenticated, async function (req, res) {
+    
+    // Don't use session data, instead draw from database
+    const rows = await userDao.getUserById(req.session.user.id);
+    const user = rows[0];
+    res.render("account/profile", {
+        user : {
+            username: user.username,
+            name: user.name,
+            dob: user.dob,
+            avatar: user.avatar,
+            description: user.description
+     }
+    });
 });
 
 // Route handler for user account deletion

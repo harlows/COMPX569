@@ -79,7 +79,7 @@ router.get("/create", function (req, res) {
 router.post("/create", async function (req, res) {
     // Get form data
     const { username, password1, name, dob, avatar, description } = req.body;
-    console.log(req.body);
+    
     // Hash password
     const passwordHash = await argon2.hash(password1);
 
@@ -87,6 +87,7 @@ router.post("/create", async function (req, res) {
     
     // Create new user
     const newUser = await userDao.createUser(user);
+    
     // Redirect to login page
     if (newUser) {
         res.redirect("./login?message=Account created successfully!");

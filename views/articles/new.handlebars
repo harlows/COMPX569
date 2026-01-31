@@ -1,3 +1,18 @@
 <div class="container">
     <h1>New Article</h1>
+
+    <form action="/articles" method="POST">
+        <div class="flex-col mb">
+            <label for="articleTitle">Title:</label>
+            <input type="text" name="title" id="articleTitle" required>
+        </div>
+        <div class="flex-col mb">
+            Content:
+            <textarea name="content" required></textarea>
+        </div>
+        <div class="flex-row justify-sb align-center">
+            <button type="submit">Publish</button>
+        </div>
+    </form>
+
 </div>

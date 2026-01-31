@@ -26,10 +26,16 @@ router.get("/articles/new", middleware.verifyAuthenticated, function (req, res) 
     res.render("articles/new");
 });
 
-router.post("/articles", async function (req, res) {
+router.post("/articles", middleware.verifyAuthenticated, async function (req, res) {
+    
+    // Get user
+    const author_id = req.session.user.id;
+    
+    // Get form data
+    const { title, content } = req.body;
 
-    // Get the data from the database
-
+    const article = { author_id, title, content };
+    
     // Create new article
     const newArticle = await articlesDao.createArticle(article);
     res.redirect("/");

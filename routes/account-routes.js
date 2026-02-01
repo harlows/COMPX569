@@ -95,7 +95,7 @@ router.post("/create", async function (req, res) {
 // Route handler to display profile page if logged in
 router.get("/profile", middleware.verifyAuthenticated, async function (req, res) {
     
-    // Don't use session data, instead draw from database
+    // Don't use session data, instead read from the database
     const rows = await userDao.getUserById(req.session.user.id);
     const user = rows[0];
     
@@ -111,7 +111,7 @@ router.get("/profile", middleware.verifyAuthenticated, async function (req, res)
     });
 });
 
-// Route handler to update user profile
+// Route handler to update a user's profile
 router.post("/profile", middleware.verifyAuthenticated, async function (req, res) {
     // Get id and username from session
     const userId = req.session.user.id;
@@ -128,7 +128,7 @@ router.post("/profile", middleware.verifyAuthenticated, async function (req, res
     const userExists = await userDao.checkUsername(user.username);
     
     // Update user profile
-    const updateUser = await userDao.updateUser(user);
+    //const updateUser = await userDao.updateUser(user);
 
     // Update session details
     req.session.user.name = name;

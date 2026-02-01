@@ -1,3 +1,8 @@
+
+<!-- Include the Quill library -->
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="/public/js/quill-editor.js"></script>
+
 <div class="container">
     <h1>Edit Article</h1>
 
@@ -8,7 +13,12 @@
         </div>
         <div class="flex-col mb">
             <label for="articleContent">Content:</label>
-            <textarea name="content" id="articleContent" required>{{article.content}}</textarea>
+            <!-- Create the editor container -->
+            <div id="editor">
+              {{{article.content}}}
+            </div>
+            <!-- Hide textarea, but still available for an Express req.body.content -->
+            <textarea name="content" id="articleContent" hidden></textarea>
         </div>
         <div class="flex-row justify-sb align-center">
             <button type="submit">Republish</button>

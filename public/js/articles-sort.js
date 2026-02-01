@@ -25,7 +25,7 @@
                 h3.textContent = `${a.title} by ${a.author}`;
 
                 const p = document.createElement("p");
-                p.textContent = a.content;
+                p.innerHTML = a.content;
 
                 article.appendChild(h3);
                 article.appendChild(p);

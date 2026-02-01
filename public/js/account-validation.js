@@ -19,10 +19,8 @@
 
     async function checkUsername() {
         const username = usernameInput.value;
-        if (username === '') {
-          check.textContent = '';
-          return;
-        }
+        check.textContent = '';
+        
         const response = await fetch(
           `/account/check-username?username=${username}`
         );

@@ -5,7 +5,7 @@ async function getUserById(id) {
     const db = await database;
     // Format date to avoid javascript conversion to NZST
     const result = await db.query(
-        "select id, username, name, date_format(dob, '%Y-%m-%d') as dob, description, avatar from users where id = ?", [id]);
+        "select id, username, password, name, date_format(dob, '%Y-%m-%d') as dob, description, avatar from users where id = ?", [id]);
 
     return result;
 }
@@ -38,8 +38,8 @@ async function checkUsername(username) {
 async function updateUser(user) {
     const db = await database;
 
-    await db.query("update users set username = ?, name = ?, dob = ?, description = ? where id = ?",
-        [user.username, user.name, user.dob, user.description, user.id]
+    await db.query("update users set username = ?, password = ?, name = ?, dob = ?, description = ? where id = ?",
+        [user.username, user.password, user.name, user.dob, user.description, user.id]
     );
 }
 

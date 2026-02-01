@@ -98,9 +98,11 @@ router.get("/profile", middleware.verifyAuthenticated, async function (req, res)
     // Don't use session data, instead draw from database
     const rows = await userDao.getUserById(req.session.user.id);
     const user = rows[0];
+    console.log(user);
     res.render("account/profile", {
         user : {
             username: user.username,
+            password1: user.password,
             name: user.name,
             dob: user.dob,
             avatar: user.avatar,
@@ -112,12 +114,20 @@ router.get("/profile", middleware.verifyAuthenticated, async function (req, res)
 
 // Route handler to update user profile
 router.post("/profile", middleware.verifyAuthenticated, async function (req, res) {
-    // Get id from session
+    // Get id and username from session
     const userId = req.session.user.id;
+    const currentUsername = req.session.user.username;
+    
     // Get form data
-    const { username, name, dob, description } = req.body;
-    const user = { id: userId, username, name, dob, description };
-
+    const { username, password1, name, dob, description } = req.body;
+    const newUsername = username;
+    // Hash password
+    const passwordHash = await argon2.hash(password1);
+    
+    const user = { id: userId, username, password: passwordHash, name, dob, description };
+    
+    const userExists = await userDao.checkUsername(user.username);
+    
     // Update user profile
     const updateUser = await userDao.updateUser(user);
 

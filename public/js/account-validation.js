@@ -15,12 +15,16 @@
 
   window.addEventListener("load", function () {
     const usernameInput = document.querySelector("#txtUsername");
+    const originalUsername = usernameInput.dataset.originalUsername;
     const check = document.querySelector("#username-check");
 
     async function checkUsername() {
         const username = usernameInput.value;
-        check.textContent = '';
-        
+        check.textContent = "";
+        // If user hasn't changed their username, don't warn
+        if (username === originalUsername) {
+          return;
+        }
         const response = await fetch(
           `/account/check-username?username=${username}`
         );
@@ -45,12 +49,12 @@ const match = document.querySelector("#password-match");
 const submitBtn = document.querySelector("#btnSubmit");
 
 function checkPasswords () {
-  password = password1.value;
-  confirm = password2.value;
+  const password = password1.value;
+  const confirm = password2.value;
 
-  if (password === "" || confirm === "") {
+  if (!password && !confirm) {
     match.textContent = "";
-    submitBtn.disabled = true;
+    submitBtn.disabled = false;
     return;
   }
   

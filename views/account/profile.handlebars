@@ -8,7 +8,7 @@
     <div class="flex-col mb">
       <label for="txtUsername">Username:</label>
       <span id="username-check"></span>
-      <input type="text" name="username" id="txtUsername" value="{{user.username}}">
+      <input type="text" name="username" id="txtUsername" value="{{user.username}}"  data-original-username="{{user.username}}">
     </div>
 
     <div class="flex-col mb">
@@ -44,7 +44,7 @@
         <textarea name="description" id="txtDescription" maxlength="400">{{user.description}}</textarea>
     </div>
     <div class="flex-row justify-sb align-center">
-      <button type="submit" id="btnSubmit">Update account</button>
+      <button type="submit" id="submitBtn">Update account</button>
     </div>
   </form>
     <form action="/account/delete" method="POST" onsubmit="return confirm('This will permanently delete your account. Continue?');">

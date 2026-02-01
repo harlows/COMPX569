@@ -3,9 +3,9 @@ const database = require("./database.js");
 // Get user details from database
 async function getUserById(id) {
     const db = await database;
-    // Format date to avoid javascript conversion to NZST
+    // Never access password hash and format date to avoid javascript conversion to NZST
     const result = await db.query(
-        "select id, username, password, name, date_format(dob, '%Y-%m-%d') as dob, description, avatar from users where id = ?", [id]);
+        "select id, username, name, date_format(dob, '%Y-%m-%d') as dob, description, avatar from users where id = ?", [id]);
 
     return result;
 }
@@ -34,12 +34,20 @@ async function checkUsername(username) {
     return result[0] || null;
 }
 
+// Update user's password
+async function updatePassword(id, hashedPassword) {
+    const db = await database;
+
+    await db.query("update users set password = ? where id = ?",
+        [hashedPassword, id]);
+}
+
 // Update user's profile
 async function updateUser(user) {
     const db = await database;
 
-    await db.query("update users set username = ?, password = ?, name = ?, dob = ?, description = ? where id = ?",
-        [user.username, user.password, user.name, user.dob, user.description, user.id]
+    await db.query("update users set username = ?, name = ?, dob = ?, description = ? where id = ?",
+        [user.username, user.name, user.dob, user.description, user.id]
     );
 }
 
@@ -56,6 +64,7 @@ module.exports = {
     getUserById,
     createUser,
     checkUsername,
+    updatePassword,
     updateUser,
     deleteUser
 };

@@ -30,15 +30,33 @@ async function getArticlesByAuthor(id) {
     const db = await database;
 
     const articles = await db.query(
-        "select title as title, content as content from articles where author_id = ? order by created_at",
+        "select id as id, title as title, content as content from articles where author_id = ? order by created_at",
         [id]);
 
     return articles;
+}
+
+async function getArticleById(id) {
+    const db = await database;
+
+    const article = await db.query(
+        "select * from articles where id = ?",
+        [id]);
+
+    return await article[0];
+}
+
+async function deleteArticle(id) {
+    const db = await database;
+
+    await db.query("delete from articles where id = ?", [id]);
 }
 
 // Export functions
 module.exports = {
     createArticle,
     getArticles,
-    getArticlesByAuthor
+    getArticlesByAuthor,
+    getArticleById,
+    deleteArticle
 };

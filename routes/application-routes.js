@@ -47,4 +47,11 @@ router.get("/articles/new", middleware.verifyAuthenticated, function (req, res) 
     res.render("articles/new");
 });
 
+router.get("/articles/:id/edit", middleware.verifyAuthenticated, async function (req, res) {
+    const id = Number(req.params.id);
+    const article = await articlesDao.getArticleById(id);
+    
+    res.render("articles/edit", { article });
+});
+
 module.exports = router;

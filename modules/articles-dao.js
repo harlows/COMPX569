@@ -36,6 +36,7 @@ async function getArticlesByAuthor(id) {
     return articles;
 }
 
+// Retrieve an article by id
 async function getArticleById(id) {
     const db = await database;
 
@@ -46,6 +47,16 @@ async function getArticleById(id) {
     return await article[0];
 }
 
+// Update an article in the database after editting
+async function updateArticleById(article) {
+    const db = await database;
+
+    await db.query("update articles set title = ?, content = ? where id = ?",
+        [article.title, article.content, article.id]
+    );
+}
+
+// Delete article from the database
 async function deleteArticle(id) {
     const db = await database;
 
@@ -58,5 +69,6 @@ module.exports = {
     getArticles,
     getArticlesByAuthor,
     getArticleById,
+    updateArticleById,
     deleteArticle
 };

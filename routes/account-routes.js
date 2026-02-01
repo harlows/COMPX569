@@ -94,11 +94,11 @@ router.post("/create", async function (req, res) {
 
 // Route handler to display profile page if logged in
 router.get("/profile", middleware.verifyAuthenticated, async function (req, res) {
-    const message = req.session.message;
+    
     // Don't use session data, instead draw from database
     const rows = await userDao.getUserById(req.session.user.id);
     const user = rows[0];
-    console.log(user);
+    
     res.render("account/profile", {
         user : {
             username: user.username,
@@ -107,8 +107,7 @@ router.get("/profile", middleware.verifyAuthenticated, async function (req, res)
             dob: user.dob,
             avatar: user.avatar,
             description: user.description
-     },
-     message
+     }
     });
 });
 
@@ -135,7 +134,7 @@ router.post("/profile", middleware.verifyAuthenticated, async function (req, res
     req.session.user.name = name;
 
     req.session.message = "Profile successfully updated.";
-    res.redirect("./profile");
+    res.redirect("/");
 });
 
 // Route handler for user account deletion

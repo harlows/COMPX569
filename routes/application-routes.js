@@ -6,7 +6,8 @@ const articlesDao = require("../modules/articles-dao.js");
 
 // Whenever we navigate to /, display all articles and check if we're authenticated.
 router.get("/", async function(req, res) {
-    
+    const message = req.session.message;
+    req.session.message = null; // clear message
     const allArticles = await articlesDao.getArticles();
     let myArticles = [];
     const user = req.session.user || null; // you're either logged in or not
@@ -17,7 +18,8 @@ router.get("/", async function(req, res) {
     res.render("home", {
         user,
         allArticles,
-        myArticles
+        myArticles,
+        message
     });
 });
 
@@ -47,11 +49,36 @@ router.get("/articles/new", middleware.verifyAuthenticated, function (req, res) 
     res.render("articles/new");
 });
 
+// Route handlers for editing articles
 router.get("/articles/:id/edit", middleware.verifyAuthenticated, async function (req, res) {
     const id = Number(req.params.id);
     const article = await articlesDao.getArticleById(id);
     
     res.render("articles/edit", { article });
+});
+
+router.post("/articles/:id/edit", middleware.verifyAuthenticated, async function (req, res) {
+    // Get article id
+    const id = Number(req.params.id);
+    // Get form data
+    const { title, content } = req.body;
+    const article = { id, title, content };
+    
+    const updatedArticle = await articlesDao.updateArticleById(article);
+
+    req.session.message = "Article republished successfully.";
+
+    res.redirect("/");
+});
+
+// Route handler for article deletion
+router.post("/delete", middleware.verifyAuthenticated, async function (req, res) {
+
+    id = req.body.articleId;
+    
+    await articlesDao.deleteArticle(id);
+    req.session.message = "Article successfully deleted.";
+    res.redirect("/");
 });
 
 module.exports = router;

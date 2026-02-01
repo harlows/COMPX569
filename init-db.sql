@@ -34,9 +34,9 @@ create table if not exists articles (
 -- For testing
 
 insert into articles (author_id, title, content) values
-    (1, 'Using Profiles with Docker Compose',
+    (7, 'Using Profiles with Docker Compose',
     'In this setup, the backend, frontend, and database form the core of the application and are started by default because we did not assign any profiles to them.'
     );
-    (2, 'Is Learning CSS a Waste of Time in 2026?',
+    (7, 'Is Learning CSS a Waste of Time in 2026?',
     'With modern frameworks, component libraries, and utility-first CSS, it’s a fair question.'
     );    

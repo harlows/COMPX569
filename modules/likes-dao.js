@@ -25,9 +25,19 @@ async function unlikeArticle(user_id, article_id) {
         [user_id, article_id]);
 }
 
+// Count likes for an article
+async function countLikes(article_id) {
+    const db = await database;
+    const rows = await db.query("select count(*) as like_count from likes where article_id = ?",
+        [article_id]);
+
+    return rows[0].like_count;
+}
+
 // Export functions
 module.exports = {
     hasLikedArticle,
     likeArticle,
-    unlikeArticle
+    unlikeArticle,
+    countLikes
 };

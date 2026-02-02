@@ -28,11 +28,21 @@ router.get("/", async function(req, res) {
 
 // Route handlers for reading articles
 router.get("/articles/:id/read", async function (req, res) {
+    
     const id = Number(req.params.id);
     const user = req.session.user;
+    
     const article = await articlesDao.getArticleById(id);
     
-    res.render("articles/read", { user, article });
+    const like_count = await likesDao.countLikes(id);
+    
+    // Check if user is logged in and has liked the article
+    let hasLiked = false;
+    if (user) {
+      hasLiked = await likesDao.hasLikedArticle(user.id, id);
+    };
+
+    res.render("articles/read", { user, article, like_count, hasLiked });
 });
 
 // Route handler for liking an article

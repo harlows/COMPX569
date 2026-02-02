@@ -8,3 +8,4 @@ delete from users where username='sharlow'
 
 select u.name as author, a.title as title, a.content as content from articles as a, users as u where a.author_id = u.id order by created_at
 
+select 1 from likes where user_id = 1 and article_id = 9

@@ -5,6 +5,7 @@ const fs = require("fs");
 const middleware = require("../middleware/auth.js");
 const upload = require("../middleware/upload");
 const articlesDao = require("../modules/articles-dao.js");
+const likesDao = require("../modules/likes-dao.js");
 
 // Whenever we navigate to /, display all articles and check if we're authenticated.
 router.get("/", async function(req, res) {
@@ -32,6 +33,24 @@ router.get("/articles/:id/read", async function (req, res) {
     const article = await articlesDao.getArticleById(id);
     
     res.render("articles/read", { user, article });
+});
+
+// Route handler for liking an article
+router.post("/articles/:id/like", middleware.verifyAuthenticated, async function (req, res) {
+    const user_id = req.session.user.id;
+    const article_id = Number(req.params.id);
+    
+    const hasLiked = await likesDao.hasLikedArticle(user_id, article_id);
+    if (hasLiked) {
+        // article has been liked by the user, so unlike it
+        await likesDao.unlikeArticle(user_id, article_id);
+    } else {
+        // article hasn't been liked by the user, so like it
+        await likesDao.likeArticle(user_id, article_id);
+    };
+    
+    res.redirect(`/articles/${article_id}/read`);
+
 });
 
 // Route to request articles in the sort order passed by URL and respond with json

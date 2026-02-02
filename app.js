@@ -14,6 +14,16 @@ app.engine("handlebars", handlebars.create({
 }).engine);
 app.set("view engine", "handlebars");
 
+var hbs = handlebars.create({});
+
+// register new function to check if a == b
+hbs.handlebars.registerHelper("checkIf", function(a, b) {
+      if (a === b) {
+          return "checked";
+      }
+      return "";
+    });
+
 // Set up to read POSTed form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({}));

@@ -1,5 +1,6 @@
 <div class="container">
   <script src="/public/js/account-validation.js"></script>
+
     <h1>Profile</h1>
     
   {{#if user}}
@@ -42,6 +43,7 @@
           type="radio"
           name="avatar"
           value="{{this.url}}"
+          {{checkIf this.url user.avatar }}checked
         >
         </label>
       {{/each}}

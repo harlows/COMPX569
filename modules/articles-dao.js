@@ -63,6 +63,21 @@ async function deleteArticle(id) {
     await db.query("delete from articles where id = ?", [id]);
 }
 
+// Like or unlike articles
+async function likeArticle(user_id, article_id) {
+    const db = await database;
+
+    await db.query("insert into likes (user_id, article_id) values (?, ?)",
+        [user_id], [article_id]);
+}
+
+async function unlikeArticle(user_id, article_id) {
+    const db = await database;
+
+    await db.query("delete from likes where user_id = ? and article_id = ?)",
+        [user_id], [article_id]);
+}
+
 // Export functions
 module.exports = {
     createArticle,
@@ -70,5 +85,7 @@ module.exports = {
     getArticlesByAuthor,
     getArticleById,
     updateArticleById,
+    likeArticle,
+    unlikeArticle,
     deleteArticle
 };

@@ -127,7 +127,7 @@ router.post("/profile", middleware.verifyAuthenticated, async function (req, res
     const userId = req.session.user.id;
     
     // Get form data
-    const { username, password1, password2, name, dob, description } = req.body;
+    const { username, password1, password2, name, dob, avatar, description } = req.body;
     // Get current user from the database
     const currentUser = await userDao.getUserById(userId);
 
@@ -150,7 +150,7 @@ router.post("/profile", middleware.verifyAuthenticated, async function (req, res
     };
     
     // Update the rest of the user profile
-    const user = { id: userId, username, name, dob, description };
+    const user = { id: userId, username, name, dob, avatar, description };
     const updateUser = await userDao.updateUser(user);
 
     // Update session details

@@ -2,6 +2,7 @@
 
 drop table if exists articles;
 drop table if exists users;
+drop table if exists likes;
 
 create table if not exists users (
     id int not null auto_increment,
@@ -29,6 +30,16 @@ create table if not exists articles (
     foreign key (author_id) references users (id)
     -- when an author is deleted their articles are deleted too
     on delete cascade
+);
+
+create table if not exists likes (
+    user_id int not null,
+    article_id int not null,
+    created_at timestamp default current_timestamp,
+    -- composite primary key prevents more than one like per user
+    primary key (user_id, article_id),
+    foreign key (user_id) references users (id) on delete cascade,
+    foreign key (article_id) references articles (id) on delete cascade
 );
 
 -- For testing

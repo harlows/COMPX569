@@ -28,9 +28,10 @@ router.get("/", async function(req, res) {
 // Route handlers for reading articles
 router.get("/articles/:id/read", async function (req, res) {
     const id = Number(req.params.id);
+    const user = req.session.user;
     const article = await articlesDao.getArticleById(id);
     
-    res.render("articles/read", { article });
+    res.render("articles/read", { user, article });
 });
 
 // Route to request articles in the sort order passed by URL and respond with json

@@ -25,6 +25,14 @@ router.get("/", async function(req, res) {
     });
 });
 
+// Route handlers for reading articles
+router.get("/articles/:id/read", async function (req, res) {
+    const id = Number(req.params.id);
+    const article = await articlesDao.getArticleById(id);
+    
+    res.render("articles/read", { article });
+});
+
 // Route to request articles in the sort order passed by URL and respond with json
 router.get("/articles/", async function (req, res) {
     const { sort } = req.query;
@@ -43,7 +51,7 @@ router.post("/articles", middleware.verifyAuthenticated, upload.single("imageFil
     if (fileInfo) {
         // Move the image into the images folder
         const oldFileName = fileInfo.path;
-        newFileName = `./public/images/${fileInfo.originalname}`;
+        newFileName = `/public/images/${fileInfo.originalname}`;
         fs.renameSync(oldFileName, newFileName);
     };
     // Get form data

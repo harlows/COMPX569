@@ -71,7 +71,13 @@ router.get("/logout", function (req, res) {
 
 // Route handlers for account creation and password hashing
 router.get("/create", function (req, res) {
-    res.render("account/create");
+    res.render("account/create", {
+     avatars: [
+        { url: "https://api.dicebear.com/9.x/croodles/svg?seed=AB&size=80" },
+        { url: "https://api.dicebear.com/9.x/croodles/svg?seed=CD&size=80" },
+        { url: "https://api.dicebear.com/9.x/croodles/svg?seed=EF&size=80" }
+      ]
+    });
 });
 
 router.post("/create", async function (req, res) {
@@ -106,7 +112,12 @@ router.get("/profile", middleware.verifyAuthenticated, async function (req, res)
             dob: user.dob,
             avatar: user.avatar,
             description: user.description
-     }
+     },
+     avatars: [
+        { url: "https://api.dicebear.com/9.x/croodles/svg?seed=AB&size=80" },
+        { url: "https://api.dicebear.com/9.x/croodles/svg?seed=CD&size=80" },
+        { url: "https://api.dicebear.com/9.x/croodles/svg?seed=EF&size=80" }
+      ]
     });
 });
 

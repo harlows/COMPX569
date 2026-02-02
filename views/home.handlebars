@@ -14,7 +14,7 @@
   <div id="article-list">
     {{#each allArticles}}
     <article>
-      <h3>{{title}} by {{author}}</h3>
+      <h3><a href="/articles/{{id}}/read">{{title}}</a> by {{author}}</h3>
       <p>{{{content}}}</p>
     </article>
     {{/each}}

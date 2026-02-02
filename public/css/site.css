@@ -60,3 +60,20 @@ form .form-group {
 .justify-sb {
     justify-content: space-between;
 }
+
+.avatar-picker {
+  display: flex;
+  gap: 1rem;
+}
+
+.avatar-option {
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-option input[type="radio"] {
+  margin-top: 0.5rem;
+}
+

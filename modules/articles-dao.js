@@ -51,8 +51,8 @@ async function getArticleById(id) {
 async function updateArticleById(article) {
     const db = await database;
 
-    await db.query("update articles set title = ?, content = ? where id = ?",
-        [article.title, article.content, article.id]
+    await db.query("update articles set title = ?, content = ?, image_path = ? where id = ?",
+        [article.title, article.content, article.image_path, article.id]
     );
 }
 

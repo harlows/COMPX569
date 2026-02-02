@@ -30,14 +30,54 @@
       <label for="txtDob">Date of birth:</label>
       <input type="date" name="dob" id="txtDob" required>
     </div>
-    <div class="flex-col mb">    
-      <fieldset>
-        <legend>Choose an avatar</legend>
-        <label>
-          <input type="radio" name="avatar" value="bear.png" required>
-        </label>
-      </fieldset>
-    </div>
+    <div class="flex-col mb">
+    <fieldset class="avatar-picker">
+    <legend>Choose an avatar:</legend>
+    <!-- This avatar style is a remix of: Croodles - Doodle your face by vijay verma, licensed under CC BY 4.0 -->
+    <label class="avatar-option">
+      <img
+        src="https://api.dicebear.com/9.x/croodles/svg?seed=AB&size=80&radius=50"
+        alt="Avatar AB"
+        width="80"
+        height="80"
+      >
+      <input
+        type="radio"
+        name="avatar"
+        value="https://api.dicebear.com/9.x/croodles/svg?seed=AB&radius=50"
+        required
+      >
+    </label>
+
+    <label class="avatar-option">
+      <img
+        src="https://api.dicebear.com/9.x/croodles/svg?seed=CD&size=80&radius=50"
+        alt="Avatar CD"
+        width="80"
+        height="80"
+      >
+      <input
+        type="radio"
+        name="avatar"
+        value="https://api.dicebear.com/9.x/croodles/svg?seed=CD&radius=50"
+      >
+    </label>
+
+    <label class="avatar-option">
+      <img
+        src="https://api.dicebear.com/9.x/croodles/svg?seed=EF&size=80&radius=50"
+        alt="Avatar EF"
+        width="80"
+        height="80"
+      >
+      <input
+        type="radio"
+        name="avatar"
+        value="https://api.dicebear.com/9.x/croodles/svg?seed=EF&radius=50"
+      >
+    </label>
+  </fieldset>
+  </div>
     <div class="flex-col mb"> 
       <label for="txtDescription">Description:</label>
         <textarea name="description" id="txtDescription" maxlength="400"></textarea>

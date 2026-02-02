@@ -38,13 +38,14 @@ router.post("/articles", middleware.verifyAuthenticated, upload.single("imageFil
     const author_id = req.session.user.id;
     
     // Upload image
+    let newFileName = "";
     const fileInfo = req.file;
-
-    // Move the image into the images folder
-    const oldFileName = fileInfo.path;
-    const newFileName = `./public/images/${fileInfo.originalname}`;
-    fs.renameSync(oldFileName, newFileName);
-    
+    if (fileInfo) {
+        // Move the image into the images folder
+        const oldFileName = fileInfo.path;
+        newFileName = `./public/images/${fileInfo.originalname}`;
+        fs.renameSync(oldFileName, newFileName);
+    };
     // Get form data
     const { title, content } = req.body;
 
@@ -67,12 +68,24 @@ router.get("/articles/:id/edit", middleware.verifyAuthenticated, async function 
     res.render("articles/edit", { article });
 });
 
-router.post("/articles/:id/edit", middleware.verifyAuthenticated, async function (req, res) {
+router.post("/articles/:id/edit", middleware.verifyAuthenticated, upload.single("imageFile"), async function (req, res) {
     // Get article id
     const id = Number(req.params.id);
     // Get form data
     const { title, content } = req.body;
-    const article = { id, title, content };
+    let newFileName = req.body.image_path;
+    
+    if (req.file) {
+        // User uploaded an image
+        const fileInfo = req.file;
+        if (fileInfo) {
+            // Move the image into the images folder
+            const oldFileName = fileInfo.path;
+            newFileName = `./public/images/${fileInfo.originalname}`;
+            fs.renameSync(oldFileName, newFileName);
+        };
+    };
+    const article = { id, title, content, image_path: newFileName };
     
     const updatedArticle = await articlesDao.updateArticleById(article);
 

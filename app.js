@@ -27,6 +27,7 @@ app.use(session({
 }));
 
 // TODO: Your app here
+
 // Make the "public" folder available statically
 const path = require("path");
 app.use("/public", express.static(path.join(__dirname, "public")));

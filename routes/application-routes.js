@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
 
 const middleware = require("../middleware/auth.js");
+const upload = require("../middleware/upload");
 const articlesDao = require("../modules/articles-dao.js");
 
 // Whenever we navigate to /, display all articles and check if we're authenticated.
@@ -30,15 +32,23 @@ router.get("/articles/", async function (req, res) {
     res.json(articles);
 });
 
-router.post("/articles", middleware.verifyAuthenticated, async function (req, res) {
+router.post("/articles", middleware.verifyAuthenticated, upload.single("imageFile"), async function (req, res) {
     
     // Get user
     const author_id = req.session.user.id;
     
+    // Upload image
+    const fileInfo = req.file;
+
+    // Move the image into the images folder
+    const oldFileName = fileInfo.path;
+    const newFileName = `./public/images/${fileInfo.originalname}`;
+    fs.renameSync(oldFileName, newFileName);
+    
     // Get form data
     const { title, content } = req.body;
 
-    const article = { author_id, title, content };
+    const article = { author_id, title, content, image_path: newFileName };   
     
     // Create new article
     const newArticle = await articlesDao.createArticle(article);

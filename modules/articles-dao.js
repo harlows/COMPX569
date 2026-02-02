@@ -4,8 +4,8 @@ async function createArticle(article) {
     const db = await database;
 
     const result = await db.query(
-        "insert into articles (author_id, title, content) values (?, ?, ?)",
-        [article.author_id, article.title, article.content]);
+        "insert into articles (author_id, title, content, image_path) values (?, ?, ?, ?)",
+        [article.author_id, article.title, article.content, article.image_path]);
 
     article.id = result.insertId;
 

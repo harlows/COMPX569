@@ -5,7 +5,7 @@
 <div class="container">
     <h1>New Article</h1>
 
-    <form action="/articles" method="POST">
+    <form action="/articles" method="POST" enctype="multipart/form-data">
         <div class="flex-col mb">
             <label for="articleTitle">Title:</label>
             <input type="text" name="title" id="articleTitle" required>
@@ -18,6 +18,10 @@
             </div>
             <!-- Hide textarea, but still available for an Express req.body.content -->
             <textarea name="content" id="articleContent" hidden></textarea>
+        </div>
+        <div class="flex-col mb">
+          <label for="inpFile">Upload cover image:</label>
+          <input id="inpFile" type="file" name="imageFile" accept=".png,.jpg,.jpeg,.bmp,.gif">
         </div>
         <div class="flex-row justify-sb align-center">
             <button type="submit">Publish</button>

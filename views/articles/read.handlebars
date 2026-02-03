@@ -29,7 +29,16 @@
 <!-- Put into a hbs partial eventually? -->
     <div id="comments">
         {{#each comments}}
-            {{{comment}}} by <strong>{{username}}</strong> <small>{{date}}</small>
+        <div id="comment">
+            <p><strong>{{username}}</strong> <small>{{date}}</small></p>
+            {{{comment}}}
+            {{#if ../user}}
+                <form action="/comments/{{id}}/delete" method="POST">
+                    <input type="hidden" name="article_id" value="{{../article.id}}">
+                    <button type="submit">Delete</button>
+                </form>
+            {{/if}}
+        </div>    
         {{/each}}
         <div id="comment-editor">
             {{#if user}}

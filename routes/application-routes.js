@@ -164,4 +164,16 @@ router.post("/articles/:id/comment", middleware.verifyAuthenticated, async funct
     res.redirect(`/articles/${article_id}/read`);
 });
 
+router.post("/comments/:id/delete", middleware.verifyAuthenticated, async function (req, res) {
+    // Get comment and article id
+    const comment_id = Number(req.params.id);
+    const article_id = req.body.article_id;
+
+    await commentsDao.deleteComment(comment_id);
+    
+    req.session.message = "Comment successfully deleted.";  
+
+    res.redirect(`/articles/${article_id}/read`);
+});
+
 module.exports = router;

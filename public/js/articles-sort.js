@@ -13,7 +13,7 @@
         async function sortArticles(sort) {
             const res = await fetch(`/articles?sort=${sort}`);
             const articles = await res.json();
-            // Dynamically rebuild the DOM
+            // Dynamically rebuild the DOM for each article
             const container = this.document.querySelector("#article-list");
             container.innerHTML = "";
             
@@ -21,12 +21,17 @@
                 
                 const article = document.createElement("article");
 
-                const h3 = document.createElement("h3");
-                h3.textContent = `${a.title} by ${a.author}`;
+                const link = document.createElement("a");
+                link.href = `/articles/${a.id}/read`;
+                link.textContent = a.title;
 
+                const h3 = document.createElement("h3");
+                h3.appendChild(link);
+                h3.appendChild(document.createTextNode(` by ${a.author}`));
+                
                 const p = document.createElement("p");
                 p.innerHTML = a.content;
-
+                
                 article.appendChild(h3);
                 article.appendChild(p);
                 container.appendChild(article);

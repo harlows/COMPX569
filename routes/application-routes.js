@@ -27,7 +27,7 @@ router.get("/", async function(req, res) {
     });
 });
 
-// Route handlers for reading articles
+// Route handlers for reading articles. No need to be logged
 router.get("/articles/:id/read", async function (req, res) {
     
     const id = Number(req.params.id);
@@ -37,13 +37,19 @@ router.get("/articles/:id/read", async function (req, res) {
     
     const like_count = await likesDao.countLikes(id);
     
+    const comments = await commentsDao.getComments(id);
+    // Format date
+    comments.forEach((c) => {
+        c.date = c.date.toLocaleString("en-NZ");
+      });
+
     // Check if user is logged in and has liked the article
     let hasLiked = false;
     if (user) {
       hasLiked = await likesDao.hasLikedArticle(user.id, id);
     };
 
-    res.render("articles/read", { user, article, like_count, hasLiked });
+    res.render("articles/read", { user, article, like_count, hasLiked, comments });
 });
 
 // Route handler for liking an article

@@ -26,8 +26,11 @@
         
     </form>
     {{/if}}
-
+<!-- Put into a hbs partial eventually? -->
     <div id="comments">
+        {{#each comments}}
+            {{{comment}}} by <strong>{{username}}</strong> <small>{{date}}</small>
+        {{/each}}
         <div id="comment-editor">
             {{#if user}}
             <form name = "editor" action="/articles/{{article.id}}/comment" method="POST">

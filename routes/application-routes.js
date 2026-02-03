@@ -6,6 +6,7 @@ const middleware = require("../middleware/auth.js");
 const upload = require("../middleware/upload");
 const articlesDao = require("../modules/articles-dao.js");
 const likesDao = require("../modules/likes-dao.js");
+const commentsDao = require("../modules/comments-dao.js");
 
 // Whenever we navigate to /, display all articles and check if we're authenticated.
 router.get("/", async function(req, res) {
@@ -140,6 +141,17 @@ router.post("/delete", middleware.verifyAuthenticated, async function (req, res)
     await articlesDao.deleteArticle(id);
     req.session.message = "Article successfully deleted.";
     res.redirect("/");
+});
+
+router.post("/articles/:id/comment", middleware.verifyAuthenticated, async function (req, res) {
+    // Get article id
+    const id = Number(req.params.id);
+    // Get user
+    const author_id = req.session.user.id;
+    // Get comment and parent_id (if it exists) from body
+    const { comment, parent_id } = req.body;
+
+    res.redirect(`/articles/${article_id}/read`);
 });
 
 module.exports = router;

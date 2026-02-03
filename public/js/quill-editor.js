@@ -9,8 +9,8 @@ window.addEventListener("load", function () {
     // Add an event listener to copy Quill editor's
     // content into the hidden textarea on submission
 
-    const form = document.querySelector("form");
-    const hiddenContent = document.querySelector("#articleContent");
+    const form = document.querySelector("form[name='editor']");
+    const hiddenContent = document.querySelector("#content");
     form.addEventListener("submit", () => {
         editorContent = quill.root.innerHTML;
         hiddenContent.value = editorContent;

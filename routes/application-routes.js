@@ -145,11 +145,15 @@ router.post("/delete", middleware.verifyAuthenticated, async function (req, res)
 
 router.post("/articles/:id/comment", middleware.verifyAuthenticated, async function (req, res) {
     // Get article id
-    const id = Number(req.params.id);
+    const article_id = Number(req.params.id);
     // Get user
-    const author_id = req.session.user.id;
+    const user_id = req.session.user.id;
     // Get comment and parent_id (if it exists) from body
-    const { comment, parent_id } = req.body;
+    const comment = req.body.comment;
+    
+    const postComment = await commentsDao.createComment(user_id, article_id, comment);
+
+    req.session.message = "Comment posted successfully.";
 
     res.redirect(`/articles/${article_id}/read`);
 });

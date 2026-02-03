@@ -50,11 +50,14 @@ create table if not exists comments (
     user_id int not null,
     article_id int not null,
     parent_id int null,
-    content text not null,
+    comment text not null,
     created_at timestamp not null default current_timestamp,
     primary key (id),
-    foreign key (user_id) references users (id), -- on delete cascade, should comments be deleted on user deletion?
+    foreign key (user_id) references users (id),
+    foreign key (article_id) references articles (id)
+    on delete cascade, -- comments deleted when an article is deleted
     foreign key (parent_id) references comments (id)
+    -- on delete cascade would ensure comments deleted if parent article deleted?
 );
 
 -- For testing

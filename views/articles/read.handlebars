@@ -1,3 +1,11 @@
+<!-- Include the Quill library -->
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="/public/js/quill-editor.js"></script>
+
+{{#if message}}
+  {{message}}
+{{/if}}
+
 <div id = "container">
     <div id ="likes">
         {{like_count}} Likes
@@ -7,14 +15,37 @@
     </div>
     <h2>{{article.title}}</h2>
     <p>{{{article.content}}}</p>
+
+    <!-- If logged in allow user to like an article -->
     {{#if user}}
-    
-    <form action="/articles/{{article.id}}/like" method="POST">
+    <form name = "likeForm" action="/articles/{{article.id}}/like" method="POST">
         
-            <button type="submit">
-                {{#if hasLiked}}Unlike{{else}}Like{{/if}}
-            </button>
+        <button type="submit">
+            {{#if hasLiked}}Unlike{{else}}Like{{/if}}
+        </button>
         
     </form>
     {{/if}}
+
+    <div id="comments">
+        <div id="comment-editor">
+            {{#if user}}
+            <form name = "editor" action="/articles/{{article.id}}/comment" method="POST">
+            <div class="flex-col mb">
+                <label for="content">Comment:</label>
+                <!-- Create the editor container -->
+                <div id="editor">
+                {{{article.comment}}}
+                </div>
+                <!-- Hide textarea, but still available for an Express req.body.content -->
+                <textarea name="comment" id="content" hidden></textarea>
+            </div>
+            <div class="flex-row justify-sb align-center">
+                <button type="submit">Post your comment</button>
+            </div>
+            </form>
+            {{/if}}
+        </div>
+    </div>
+
 </div>

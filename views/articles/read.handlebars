@@ -23,18 +23,18 @@
             {{#if hasLiked}}Unlike{{else}}Like{{/if}}
         </button>
     </form>
-<!--
-    <div id="comment-editor">
+
+    <div id="comment-form">
         {{#if user}}
-            <form name = "editor" action="/articles/{{article.id}}/comment" method="POST">
+            <form class="quill-form" action="/articles/{{article.id}}/comment" method="POST">
                 <label for="content">Comment:</label>
-                <div id="editor"></div>
-                <textarea name="comment" id="content" hidden></textarea>
+                <div class="quill-editor"></div>
+                <textarea name="comment" class="quill-content" hidden></textarea>
                 <button type="submit">Post your comment</button>
             </form>
         {{/if}}
     </div>
--->   
+ 
     {{/if}}
 
 <!-- Put into a hbs partial eventually? -->
@@ -54,12 +54,12 @@
                 <button type="button" class="btn-reply">Reply</button>
             </div>
             <div class="reply-form hidden">
-                <form name = "editor" action="/articles/{{../article.id}}/comment" method="POST">
+                <form class="quill-form" action="/articles/{{../article.id}}/comment" method="POST">
                     <label for="content">Reply:</label>
                     <!-- Create the editor container -->
-                    <div id="editor"></div>
+                    <div class="quill-editor"></div>
                     <!-- Hide textarea, but still available for an Express req.body.content -->
-                    <textarea name="comment" id="content" hidden></textarea>
+                    <textarea name="comment" class="quill-content" hidden></textarea>
                     <input type="hidden" name="parent_id" value="{{id}}">
                     <button type="submit">Post your reply</button>
                 </form>

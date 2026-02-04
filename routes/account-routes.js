@@ -66,7 +66,7 @@ router.get("/logout", function (req, res) {
     if (req.session.user) {
         delete req.session.user;
     }
-    res.redirect("./login?message=Successfully logged out!");
+    res.redirect("/");
 });
 
 // Route handlers for account creation and password hashing

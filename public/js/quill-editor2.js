@@ -1,19 +1,26 @@
 
 window.addEventListener("load", function () {
-  // Initialize Quill editor
+  
 
-  const quill = new Quill('#editor', {
-      theme: 'snow'
-  });
+  // Find every form that needs a Quill editor
+  const forms = document.querySelectorAll(".quill-form");
 
-  // Add an event listener to copy Quill editor's
-  // content into the hidden textarea on submission
+  forms.forEach( (form) => {
+    const editor = form.querySelector(".quill-editor");
+    const hiddenContent = form.querySelector(".quill-content");
 
-  const form = document.querySelector("form[name='editor']");
-  const hiddenContent = document.querySelector("#content");
-  form.addEventListener("submit", () => {
-      editorContent = quill.root.innerHTML;
-      hiddenContent.value = editorContent;
+    // Initialize Quill editor in this form
+    const quill = new Quill(editor, {
+        theme: 'snow'
+    });
+
+    // Add an event listener to copy Quill editor's
+    // content into the hidden textarea on submission
+
+    form.addEventListener("submit", () => {
+        editorContent = quill.root.innerHTML;
+        hiddenContent.value = editorContent;
+    });
   });
 
   // Toggle editor when the reply button is clicked

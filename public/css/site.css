@@ -12,7 +12,11 @@ body {
 }
 
 .container {
-    margin: 20px 20px;
+    display: grid;
+    grid-template-columns: 1fr 3 fr 1fr;
+    max-width: 1264px;
+    gap: 2px;
+    margin: 0 auto;
 }
 
 h1, h2, h3 {

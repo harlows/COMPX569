@@ -38,8 +38,16 @@ router.get("/articles/:id/read", async function (req, res) {
     const like_count = await likesDao.countLikes(id);
     
     const comments = await commentsDao.getComments(id);
-    // Format date
+    
+    // Add a flag to mark whether a user can delete a comment and format date
     comments.forEach((c) => {
+        // Can delete if the user is logged in,
+        if(user) {
+            c.canDelete = c.author_id === user.id || // the author of the commet OR
+            article.author_id === user.id;           // the author of the comment
+        } else {
+            c.canDelete = false; // Not logged in
+        }
         c.date = c.date.toLocaleString("en-NZ");
       });
 
@@ -48,7 +56,7 @@ router.get("/articles/:id/read", async function (req, res) {
     if (user) {
       hasLiked = await likesDao.hasLikedArticle(user.id, id);
     };
-
+    console.log(comments);
     res.render("articles/read", { user, article, like_count, hasLiked, comments });
 });
 

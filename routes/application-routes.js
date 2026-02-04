@@ -174,8 +174,9 @@ router.post("/articles/:id/comment", middleware.verifyAuthenticated, async funct
     const user_id = req.session.user.id;
     // Get comment and parent_id (if it exists) from body
     const comment = req.body.comment;
+    const parent_id = req.body.parent_id;
     
-    const postComment = await commentsDao.createComment(user_id, article_id, comment);
+    const postComment = await commentsDao.createComment(user_id, article_id, parent_id, comment);
 
     req.session.message = "Comment posted successfully.";
 

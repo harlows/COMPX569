@@ -96,6 +96,10 @@ h3 {
     font-size: 17px;
 }
 
+.hidden {
+  display: none;
+}
+
 form .form-group {
     display: flex;
     flex-direction: column;

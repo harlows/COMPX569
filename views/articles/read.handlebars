@@ -1,6 +1,6 @@
 <!-- Include the Quill library -->
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-<script src="/public/js/quill-editor.js"></script>
+<script src="/public/js/quill-editor2.js"></script>
 
 {{#if message}}
   {{message}}
@@ -23,36 +23,48 @@
             {{#if hasLiked}}Unlike{{else}}Like{{/if}}
         </button>
     </form>
-
+<!--
     <div id="comment-editor">
         {{#if user}}
             <form name = "editor" action="/articles/{{article.id}}/comment" method="POST">
                 <label for="content">Comment:</label>
-                <!-- Create the editor container -->
                 <div id="editor"></div>
-                <!-- Hide textarea, but still available for an Express req.body.content -->
                 <textarea name="comment" id="content" hidden></textarea>
                 <button type="submit">Post your comment</button>
             </form>
         {{/if}}
     </div>
-    
+-->   
     {{/if}}
 
 <!-- Put into a hbs partial eventually? -->
     <div id="comments">
         {{#each comments}}
-        <div id="comment">
+        <div class="comment-body">
             <p><strong>{{username}}</strong> <small>{{date}}</small></p>
-            {{{comment}}}
+                {{{comment}}}
+            {{#if ../user}}    
             {{#if canDelete}}
             <form action="/comments/{{id}}/delete" method="POST">
                     <input type="hidden" name="article_id" value="{{../article.id}}">
                     <button type="submit">Delete</button>
             </form>
             {{/if}}
-
-        </div>    
+            <div class="comment-reply">
+                <button type="button" class="btn-reply">Reply</button>
+            </div>
+            <div class="reply-form hidden">
+                <form name = "editor" action="/articles/{{../article.id}}/comment" method="POST">
+                    <label for="content">Reply:</label>
+                    <!-- Create the editor container -->
+                    <div id="editor"></div>
+                    <!-- Hide textarea, but still available for an Express req.body.content -->
+                    <textarea name="comment" id="content" hidden></textarea>
+                    <input type="hidden" name="parent_id" value="{{id}}">
+                    <button type="submit">Post your reply</button>
+                </form>
+            </div>
+            {{/if}}
         {{/each}}
     </div>
 </div>

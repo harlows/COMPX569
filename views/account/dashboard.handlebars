@@ -1,0 +1,11 @@
+<div class = "container">
+  {{#if user}}
+  <h2>Your articles</h2>
+
+    {{#each myArticles}}
+    <article>
+      <p>{{title}} <a href="/articles/{{id}}/edit">Edit</a></p>
+    </article>
+    {{/each}}
+  {{/if}}
+</div>

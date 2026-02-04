@@ -1,14 +1,14 @@
 
  window.addEventListener("load", function () {
 
-    const dateBtn = document.querySelector("#sort-date")
-    dateBtn.addEventListener("click", () => sortArticles("date"));
+    const sortBy = document.querySelector("#sort-by");
 
-    const titleBtn = document.querySelector("#sort-title")
-    titleBtn.addEventListener("click", () => sortArticles("title"));
-
-    const nameBtn = document.querySelector("#sort-name")
-    nameBtn.addEventListener("click", () => sortArticles("username"));
+    sortBy.addEventListener("change", () => {
+    const sortValue = sortBy.value;
+    console.log(sortValue);
+    sortArticles(sortValue);
+    });
+    
         // Use AJAX to sort articles, then...
         async function sortArticles(sort) {
             const res = await fetch(`/articles?sort=${sort}`);

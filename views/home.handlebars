@@ -7,32 +7,24 @@
 {{/if}}
 
   <h1>Hello, {{#if user}}{{user.name}}{{else}}welcome{{/if}}!</h1>
-  <h2>Latest articles</h2>
-  <button id="sort-date">Date</button>
-  <button id="sort-title">Title</button>
-  <button id="sort-name">Author</button>
-  <div id="article-list">
-    {{#each allArticles}}
-    <article>
-      <h3><a href="/articles/{{id}}/read">{{title}}</a> by {{author}}</h3>
-      <p>{{{content}}}</p>
-    </article>
-    {{/each}}
-  </div>
-  {{#if user}}
-  <h2>Your articles</h2>
+  
+  <div id="articles">
+    <h2>Latest articles</h2>
+    <label for="sort-by">Sort by:</label>  
+    <select id="sort-by" name="sort">
+      <option value="date">Date</option>
+      <option value="title">Title</option>
+      <option value="author">Author</option>
+    </select>
+    <div id="article-list">
+      {{#each allArticles}}
+      <article>
+        <h3><a href="/articles/{{id}}/read">{{title}}</a> by {{author}}</h3>
+        <p>{{{content}}}</p>
+      </article>
+      {{/each}}
+    </div>
 
-    {{#each myArticles}}
-    <article>
-      <p>{{title}} <a href="/articles/{{id}}/edit">Edit</a></p>
-    </article>
-    {{/each}}
 
-    <p><a href="/articles/new">New Article</a></p>
-    <p>Click <a href="/account/logout">here</a> to log out.</p>
-    <p>Click <a href="/account/profile">here</a> to edit your profile.</p>    
-  {{else}}
-    <p>Click <a href="/account/login">here</a> to log in.</p>
-    {{/if}}
 </div>
 

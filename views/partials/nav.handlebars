@@ -1,0 +1,18 @@
+<nav class="top-nav">
+  <div class="nav-left">
+    <a href="/">Home</a>
+  </div>
+
+  <div class="nav-right">
+    {{#if user}}
+      <span>Welcome, {{user.username}}</span>
+      <a href="/articles/new">New Article</a>
+      <a href="/account/dashboard">My Articles</a>
+      <a href="/account/profile">Profile</a>
+      <a href="/account/logout">Logout</a>
+    {{else}}
+      <a href="/account/login">Login</a>
+      <a href="/account/create">Register</a>
+    {{/if}}
+  </div>
+</nav>

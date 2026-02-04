@@ -19,6 +19,29 @@ body {
     margin: 0 auto;
 }
 
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #333;
+  padding: 0.5rem 1rem;
+}
+
+.top-nav a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+
+.top-nav a:hover {
+  text-decoration: underline;
+}
+
+.top-nav .nav-right span {
+  color: #ccc;
+  margin-right: 1rem;
+}
+
 h1, h2, h3 {
     color: #231F20;
 }

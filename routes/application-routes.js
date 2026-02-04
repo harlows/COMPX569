@@ -10,20 +10,27 @@ const commentsDao = require("../modules/comments-dao.js");
 
 // Whenever we navigate to /, display all articles and check if we're authenticated.
 router.get("/", async function(req, res) {
+    const user = req.session.user;
     const message = req.session.message;
     req.session.message = null; // clear message
     const allArticles = await articlesDao.getArticles();
     let myArticles = [];
-    const user = req.session.user || null; // you're either logged in or not
-
-    if (user) {
-        myArticles = await articlesDao.getArticlesByAuthor(user.id);
-    }
+    
     res.render("home", {
         user,
         allArticles,
-        myArticles,
         message
+    });
+});
+
+// Dashboard page displays all user's articles if they are logged in
+router.get("/account/dashboard", middleware.verifyAuthenticated, async function(req, res) {
+    const user = req.session.user;
+    if (user) {
+        myArticles = await articlesDao.getArticlesByAuthor(user.id);
+    }
+        res.render("account/dashboard", {
+        myArticles
     });
 });
 
@@ -56,7 +63,7 @@ router.get("/articles/:id/read", async function (req, res) {
     if (user) {
       hasLiked = await likesDao.hasLikedArticle(user.id, id);
     };
-    console.log(comments);
+    
     res.render("articles/read", { user, article, like_count, hasLiked, comments });
 });
 
@@ -110,15 +117,18 @@ router.post("/articles", middleware.verifyAuthenticated, upload.single("imageFil
 });
 
 router.get("/articles/new", middleware.verifyAuthenticated, function (req, res) {
-    res.render("articles/new");
+    const user = req.session.user;
+    
+    res.render("articles/new", { user });
 });
 
 // Route handlers for editing articles
 router.get("/articles/:id/edit", middleware.verifyAuthenticated, async function (req, res) {
+    const user = req.session.user;
     const id = Number(req.params.id);
     const article = await articlesDao.getArticleById(id);
     
-    res.render("articles/edit", { article });
+    res.render("articles/edit", { article, user });
 });
 
 router.post("/articles/:id/edit", middleware.verifyAuthenticated, upload.single("imageFile"), async function (req, res) {

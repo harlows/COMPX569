@@ -34,7 +34,7 @@ router.get("/account/dashboard", middleware.verifyAuthenticated, async function(
     });
 });
 
-// Route handlers for reading articles. No need to be logged
+// Route handlers for reading articles. No need to be logged in
 router.get("/articles/:id/read", async function (req, res) {
     
     const id = Number(req.params.id);

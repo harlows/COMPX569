@@ -7,6 +7,8 @@ function verifyAuthenticated(req, res, next) {
     if (req.session.user) {
         next();
     } else {
+        console.dir(req.originalUrl);
+        console.dir("Hello");
         res.redirect("/account/login");
     }
 }

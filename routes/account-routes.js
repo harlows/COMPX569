@@ -34,10 +34,9 @@ router.get("/login", function (req, res) {
 // If they match a user in the database, add that user to the session and redirect to "/".
 // Otherwise, redirect to "/login", with a "login failed" message.
 router.post("/login", async function (req, res) {
-
+    
     // Get the username and password submitted in the form
     const { username, password } = req.body;
-    
     // Find a matching user in the database by username
     const user = await userDao.checkUsername(username);
     
@@ -55,6 +54,7 @@ router.post("/login", async function (req, res) {
         // Auth success - add the user to the session, and redirect to the homepage.
         req.session.user = user;
         console.log(req.session.user.name);
+        
         res.redirect("/");
     } else { // Wrong password!
         res.redirect("./login?message=Authentication failed!");

@@ -11,6 +11,7 @@ const userDao = require("../modules/users-dao.js");
 // Handlebars engine by adding it to res.locals.
 router.use(function (req, res, next) {
     res.locals.user = req.session.user;
+    res.locals.currentUrl = req.originalUrl;
     next();
 });
 
@@ -25,6 +26,8 @@ router.get("/login", function (req, res) {
 
     else {
         res.locals.message = req.query.message;
+        req.session.returnTo = req.query.returnTo;
+        
         res.render("account/login");
     }
 
@@ -51,11 +54,16 @@ router.post("/login", async function (req, res) {
     console.log(`Password is ${isVerified}`);
     
     if (isVerified) {
-        // Auth success - add the user to the session, and redirect to the homepage.
+        // Auth success - add the user to the session, and redirect to the page they clocked login from.
         req.session.user = user;
+        const dest = req.session.returnTo;
         console.log(req.session.user.name);
         
-        res.redirect("/");
+        // Clear it so it doesn't persist
+        delete req.session.returnTo;
+        
+        res.redirect(dest);
+        
     } else { // Wrong password!
         res.redirect("./login?message=Authentication failed!");
     }

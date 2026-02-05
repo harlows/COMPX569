@@ -11,7 +11,7 @@
       <a href="/account/profile">Profile</a>
       <a href="/account/logout">Logout</a>
     {{else}}
-      <a href="/account/login">Login</a>
+      <a href="/account/login?returnTo={{currentUrl}}">Login</a>
       <a href="/account/create">Register</a>
     {{/if}}
   </div>

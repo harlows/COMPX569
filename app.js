@@ -37,6 +37,12 @@ app.use(session({
   secret: "COMPX569"
 }));
 
+// Make the referrer URL available to the
+// Handlebars engine by adding it to res.locals (Must run before nav loads)
+app.use(function (req, res, next) {
+    res.locals.currentUrl = req.originalUrl;
+    next();
+});
 // TODO: Your app here
 
 // Make the "public" folder available statically

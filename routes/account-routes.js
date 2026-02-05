@@ -54,16 +54,16 @@ router.post("/login", async function (req, res) {
     console.log(`Password is ${isVerified}`);
     
     if (isVerified) {
-        // Auth success - add the user to the session, and redirect to the page they clocked login from.
+        // Auth success - add the user to the session, and redirect to the page they clicked login from or to home.
         req.session.user = user;
-        const dest = req.session.returnTo;
+        const dest = req.session.returnTo || "/";
         console.log(req.session.user.name);
         
         // Clear it so it doesn't persist
         delete req.session.returnTo;
         
         res.redirect(dest);
-        
+
     } else { // Wrong password!
         res.redirect("./login?message=Authentication failed!");
     }

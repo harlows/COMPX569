@@ -28,6 +28,9 @@ hbs.handlebars.registerHelper('teaser', function (str, len) {
   if (!str) return "";
   return str.length > len ? str.slice(0, len) + "…" : str;
 });
+hbs.handlebars.registerHelper('convertDate', function (date) {
+  return new Date(date).toLocaleString("en-NZ");
+});
 
 // Set up to read POSTed form data
 app.use(express.urlencoded({ extended: true }));

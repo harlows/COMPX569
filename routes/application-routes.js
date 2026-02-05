@@ -89,7 +89,7 @@ router.post("/articles/:id/like", middleware.verifyAuthenticated, async function
 
 });
 
-// Route to request articles in the sort order passed by URL and respond with json
+// Endpoint to request articles in the sort order and respond with json
 router.get("/articles/", async function (req, res) {
     const { sort } = req.query;
     const articles = await articlesDao.getArticles(sort);

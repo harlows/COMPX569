@@ -20,7 +20,7 @@ async function getArticles(sort) {
     if ( sort === "username") orderBy = "author asc";
 
     const articles = await db.query(
-        `select a.id as id, u.name as author, a.title as title, a.content as content from articles as a, users as u where a.author_id = u.id order by ${orderBy}`);
+        `select a.id as id, a.created_at as date, u.name as author, a.title as title, a.content as content from articles as a, users as u where a.author_id = u.id order by ${orderBy}`);
 
     return articles;
 }

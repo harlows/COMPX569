@@ -39,33 +39,74 @@
 
 
 <!-- Put into a hbs partial eventually? -->
-    <div id="comments">
-        {{#each comments}}
-        <div class="comment-body">
+<div id="comments">
+    {{#each comments}}
+        <div class="comment top-level">
             <p><strong>{{username}}</strong> <small>{{date}}</small></p>
-                {{{comment}}}
-            {{#if ../user}}    
-            {{#if canDelete}}
-            <form action="/comments/{{id}}/delete" method="POST">
-                    <input type="hidden" name="article_id" value="{{../article.id}}">
-                    <button type="submit" class="btn">Delete</button>
-            </form>
-            {{/if}}
-            <div class="comment-reply">
+            {{{comment}}}
+            {{#if ../user}} 
                 <button type="button" class="btn btn-reply">Reply</button>
-            </div>
-            <div class="reply-form hidden">
-                <form class="quill-form" action="/articles/{{../article.id}}/comment" method="POST">
-                    <label for="content">Reply:</label>
-                    <!-- Create the editor container -->
-                    <div class="quill-editor"></div>
-                    <!-- Hide textarea, but still available for an Express req.body.content -->
-                    <textarea name="comment" class="quill-content" hidden></textarea>
-                    <input type="hidden" name="parent_id" value="{{id}}">
-                    <button type="submit" class="btn">Post your reply</button>
-                </form>
-            </div>
+                {{#if canDelete}}
+                    <form action="/comments/{{id}}/delete" method="POST">
+                        <input type="hidden" name="article_id" value="{{article_id}}">
+                        <button type="submit" class="btn">Delete</button>
+                    </form>
+                {{/if}}
+            {{/if}}        
+                <div class="reply-form hidden">
+                    <form class="quill-form" action="/articles/{{article_id}}/comment" method="POST">
+                        <label for="content">Reply:</label>
+                        <!-- Create the editor container -->
+                        <div class="quill-editor"></div>
+                        <!--Hide textarea, but still available for an Express req.body.content -->
+                        <textarea name="comment" class="quill-content" hidden></textarea>
+                        <input type="hidden" name="parent_id" value="{{id}}">
+                        <button type="submit" class="btn">Post your reply</button>
+                    </form>
+                </div>
+            {{#if replies.length}}
+                {{#each replies}}
+                    <div class="comment level-2">
+                        <p><strong>{{username}}</strong> <small>{{date}}</small></p>
+                        {{{comment}}}
+                        {{#if ../../user}} 
+                            <button type="button" class="btn btn-reply">Reply</button>
+                            {{#if ../canDelete}}
+                                <form action="/comments/{{id}}/delete" method="POST">
+                                    <input type="hidden" name="article_id" value="{{article_id}}">
+                                    <button type="submit" class="btn">Delete</button>
+                                </form>
+                            {{/if}}
+                        {{/if}}            
+                        <div class="reply-form hidden">
+                            <form class="quill-form" action="/articles/{{article_id}}/comment" method="POST">
+                                <label for="content">Reply:</label>
+                                <!-- Create the editor container -->
+                                <div class="quill-editor"></div>
+                                <!--Hide textarea, but still available for an Express req.body.content -->
+                                <textarea name="comment" class="quill-content" hidden></textarea>
+                                <input type="hidden" name="parent_id" value="{{id}}">
+                                <button type="submit" class="btn">Post your reply</button>
+                            </form>
+                        </div>
+            
+                        {{#if replies.length}}
+                            {{#each replies}}
+                                <div class="comment level-3">
+                                    <p><strong>{{username}}</strong> <small>{{date}}</small></p>
+                                    {{{comment}}}
+                                    {{#if ../../canDelete}}
+                                        <form action="/comments/{{id}}/delete" method="POST">
+                                            <input type="hidden" name="article_id" value="{{article_id}}">
+                                            <button type="submit" class="btn">Delete</button>
+                                        </form>
+                                    {{/if}}
+                                </div>    
+                            {{/each}}
+                        {{/if}}
+                    </div>
+                {{/each}}
             {{/if}}
-        {{/each}}
-    </div>
+        </div>
+    {{/each}}
 </div>

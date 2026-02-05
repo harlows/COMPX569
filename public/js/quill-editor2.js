@@ -28,7 +28,7 @@ window.addEventListener("load", function () {
 
   replyButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const comment = btn.closest(".comment-body");
+      const comment = btn.closest(".comment");
       const replyForm = comment.querySelector(".reply-form");
 
     replyForm.classList.toggle("hidden");

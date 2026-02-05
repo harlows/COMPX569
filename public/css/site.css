@@ -95,11 +95,6 @@ h2 {
     font-size: 20px;
 }
 
-
-.hidden {
-  display: none;
-}
-
 form .form-group {
     display: flex;
     flex-direction: column;
@@ -107,8 +102,37 @@ form .form-group {
 }
 
 .form-narrow {
-    max-width: 420px;
+    max-width: 520px;
     margin: 0 auto;
+}
+
+.comment-body {
+  margin-bottom: 1.5rem;
+}
+
+.comment {
+  margin-bottom: 1rem;
+}
+
+.level-2 {
+  margin-left: 2rem;
+  border-left: 2px solid #ddd;
+  padding-left: 1rem;
+}
+
+.level-3 {
+  margin-left: 4rem;
+  border-left: 2px dashed #ccc;
+  padding-left: 1rem;
+}
+
+.reply-form {
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+}
+
+.hidden {
+  display: none;
 }
 
 .flex-col, .flex-row {

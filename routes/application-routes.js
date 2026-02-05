@@ -4,6 +4,7 @@ const fs = require("fs");
 
 const middleware = require("../middleware/auth.js");
 const upload = require("../middleware/upload");
+const { buildComments } = require("../modules/build-comments.js");
 const articlesDao = require("../modules/articles-dao.js");
 const likesDao = require("../modules/likes-dao.js");
 const commentsDao = require("../modules/comments-dao.js");
@@ -45,7 +46,7 @@ router.get("/articles/:id/read", async function (req, res) {
     const like_count = await likesDao.countLikes(id);
     
     const comments = await commentsDao.getComments(id);
-    
+
     // Add a flag to mark whether a user can delete a comment and format date
     comments.forEach((c) => {
         // Can delete if the user is logged in,
@@ -56,15 +57,18 @@ router.get("/articles/:id/read", async function (req, res) {
             c.canDelete = false; // Not logged in
         }
         c.date = c.date.toLocaleString("en-NZ");
+        c.article_id = article.id; // Attach to comments to pass to view
       });
 
+    const nestedComments = buildComments(comments);
+    
     // Check if user is logged in and has liked the article
     let hasLiked = false;
     if (user) {
       hasLiked = await likesDao.hasLikedArticle(user.id, id);
     };
     
-    res.render("articles/read", { user, article, like_count, hasLiked, comments });
+    res.render("articles/read", { user, article, like_count, hasLiked, comments: nestedComments });
 });
 
 // Route handler for liking an article
@@ -175,7 +179,7 @@ router.post("/articles/:id/comment", middleware.verifyAuthenticated, async funct
     // Get comment and parent_id (if it exists) from body
     const comment = req.body.comment;
     const parent_id = req.body.parent_id;
-    
+
     const postComment = await commentsDao.createComment(user_id, article_id, parent_id, comment);
 
     req.session.message = "Comment posted successfully.";

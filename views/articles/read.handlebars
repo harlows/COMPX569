@@ -7,35 +7,36 @@
 {{/if}}
 
 <div class = "container">
-    <div id ="likes">
-        {{like_count}} Likes
-    </div>
+
     <div id="header">
         <img src="{{article.image_path}}">
     </div>
     <h2>{{article.title}}</h2>
-    <p>{{{article.content}}}</p>
-
+    {{{article.content}}}
+    <div id ="likes">
+        {{like_count}} Likes
+    </div>
+    
     <!-- If logged in allow user to like or comment on an article -->
     {{#if user}}
     <form name = "likeForm" action="/articles/{{article.id}}/like" method="POST">
-        <button type="submit">
+        <button type="submit" class="btn">
             {{#if hasLiked}}Unlike{{else}}Like{{/if}}
         </button>
     </form>
-
+    {{/if}} 
+    <h3>Comments</h3>
     <div id="comment-form">
         {{#if user}}
             <form class="quill-form" action="/articles/{{article.id}}/comment" method="POST">
                 <label for="content">Comment:</label>
                 <div class="quill-editor"></div>
                 <textarea name="comment" class="quill-content" hidden></textarea>
-                <button type="submit">Post your comment</button>
+                <button type="submit" class="btn">Post your comment</button>
             </form>
         {{/if}}
     </div>
- 
-    {{/if}}
+
 
 <!-- Put into a hbs partial eventually? -->
     <div id="comments">
@@ -47,11 +48,11 @@
             {{#if canDelete}}
             <form action="/comments/{{id}}/delete" method="POST">
                     <input type="hidden" name="article_id" value="{{../article.id}}">
-                    <button type="submit">Delete</button>
+                    <button type="submit" class="btn">Delete</button>
             </form>
             {{/if}}
             <div class="comment-reply">
-                <button type="button" class="btn-reply">Reply</button>
+                <button type="button" class="btn btn-reply">Reply</button>
             </div>
             <div class="reply-form hidden">
                 <form class="quill-form" action="/articles/{{../article.id}}/comment" method="POST">
@@ -61,7 +62,7 @@
                     <!-- Hide textarea, but still available for an Express req.body.content -->
                     <textarea name="comment" class="quill-content" hidden></textarea>
                     <input type="hidden" name="parent_id" value="{{id}}">
-                    <button type="submit">Post your reply</button>
+                    <button type="submit" class="btn">Post your reply</button>
                 </form>
             </div>
             {{/if}}

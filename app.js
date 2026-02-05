@@ -24,6 +24,10 @@ hbs.handlebars.registerHelper("checkIf", function(a, b) {
       }
       return "";
     });
+hbs.handlebars.registerHelper('teaser', function (str, len) {
+  if (!str) return "";
+  return str.length > len ? str.slice(0, len) + "…" : str;
+});
 
 // Set up to read POSTed form data
 app.use(express.urlencoded({ extended: true }));

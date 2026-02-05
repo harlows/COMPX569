@@ -25,13 +25,13 @@
           <input id="inpFile" type="file" name="imageFile" accept=".png,.jpg,.jpeg,.bmp,.gif">
         </div>
         <div class="flex-row justify-sb align-center">
-            <button type="submit">Republish</button>
+            <button type="submit" class="btn">Republish</button>
         </div>
     </form>
     
     <form action="/delete" method="POST" onsubmit="return confirm('This will permanently delete your article. Continue?');">
         <div class="flex-row justify-sb align-center">
-         <button type="submit" name="articleId" value="{{article.id}}">Delete</button>
+         <button type="submit" name="articleId" class="btn" value="{{article.id}}">Delete</button>
         </div>
     </form>
 </div>

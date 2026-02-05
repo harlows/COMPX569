@@ -1,11 +1,17 @@
 <div class = "container">
+<div id="header">
   {{#if user}}
-  <h2>Your articles</h2>
 
+  <h1>{{user.name}}'s Articles</h1>
+
+</div>
+<div class="article-list">
     {{#each myArticles}}
-    <article>
-      <p>{{title}} <a href="/articles/{{id}}/edit">Edit</a></p>
+    <article class="story">
+      <h3 class="story-title">{{title}}</h3>
+      <a href="/articles/{{id}}/edit" class="btn">Edit</a>
     </article>
     {{/each}}
+ </div>   
   {{/if}}
 </div>

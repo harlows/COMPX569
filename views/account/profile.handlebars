@@ -54,12 +54,12 @@
         <textarea name="description" id="txtDescription" maxlength="400">{{user.description}}</textarea>
     </div>
     <div class="flex-row justify-sb align-center">
-      <button type="submit" id="submitBtn">Update account</button>
+      <button type="submit" class="btn" id="submitBtn">Update account</button>
     </div>
   </form>
     <form action="/account/delete" method="POST" onsubmit="return confirm('This will permanently delete your account. Continue?');">
         <div class="flex-row justify-sb align-center">
-         <button type="submit">Delete my account</button>
+         <button type="submit" class="btn">Delete my account</button>
         </div>
     </form>
     {{/if}}

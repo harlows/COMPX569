@@ -5,10 +5,9 @@
 {{#if message}}
   {{message}}
 {{/if}}
-
+<div id="header">
   <h1>Hello, {{#if user}}{{user.name}}{{else}}welcome{{/if}}!</h1>
   
-  <div id="articles">
     <h2>Latest articles</h2>
     <label for="sort-by">Sort by:</label>  
     <select id="sort-by" name="sort">
@@ -16,11 +15,13 @@
       <option value="title">Title</option>
       <option value="author">Author</option>
     </select>
-    <div id="article-list">
+</div>
+
+<div id="article-list">
       {{#each allArticles}}
-      <article>
-        <h3><a href="/articles/{{id}}/read">{{title}}</a> by {{author}}</h3>
-        <p>{{{content}}}</p>
+      <article class="story">
+        <h3 class="story-title"><a href="/articles/{{id}}/read">{{title}}</a> by {{author}}</h3>
+        <p>{{{teaser content 64}}}</p>
       </article>
       {{/each}}
     </div>

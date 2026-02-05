@@ -14,7 +14,7 @@ router.get("/", async function(req, res) {
     const message = req.session.message;
     req.session.message = null; // clear message
     const allArticles = await articlesDao.getArticles();
-    let myArticles = [];
+    
     
     res.render("home", {
         user,

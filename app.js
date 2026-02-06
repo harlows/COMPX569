@@ -24,10 +24,12 @@ hbs.handlebars.registerHelper("checkIf", function(a, b) {
       }
       return "";
     });
+// Clip content for teaser text
 hbs.handlebars.registerHelper('teaser', function (str, len) {
   if (!str) return "";
   return str.length > len ? str.slice(0, len) + "…" : str;
 });
+// Clean up date format
 hbs.handlebars.registerHelper('convertDate', function (date) {
   return new Date(date).toLocaleString("en-NZ");
 });

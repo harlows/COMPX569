@@ -3,15 +3,21 @@
   {{#if user}}
 
   <h1>{{user.name}}'s Articles</h1>
-
+  
 </div>
+
 <div class="article-list">
+  {{#if myArticles.length}}
     {{#each myArticles}}
     <article class="story">
       <h3 class="story-title">{{title}}</h3>
       <a href="/articles/{{id}}/edit" class="btn">Edit</a>
     </article>
     {{/each}}
- </div>   
+</div>
+ {{else}}
+    <h4>You have no articles. Writing an article is easy, you can do it!</h4>
+    
+  {{/if}} 
   {{/if}}
 </div>

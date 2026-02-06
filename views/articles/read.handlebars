@@ -6,25 +6,32 @@
   {{message}}
 {{/if}}
 
-<div class = "container">
+<div class="container article">
 
-    <div id="header">
+    <div id="header" class="cover">
         <img src="{{article.image_path}}">
+        <h2>{{article.title}}</h2>
+        <h3>by {{article.author}}</h3>
+        <h4>{{convertDate article.created_at}}</h4>
     </div>
-    <h2>{{article.title}}</h2>
-    {{{article.content}}}
-    <div id ="likes">
-        {{like_count}} Likes
+
+    <div id="likes" class="likes">
+        <span class="likes_count">{{like_count}} {{#if (checkIf like_count 1)}}Like{{else}}Likes{{/if}}</span>
+        
+        <!-- If logged in allow user to like or comment on an article -->
+        {{#if user}}
+        <form class="likes-form" action="/articles/{{article.id}}/like" method="POST">
+            <button type="submit" class="btn btn-like">
+                {{#if hasLiked}}Unlike{{else}}Like{{/if}}
+            </button>
+        </form>
+        {{/if}} 
     </div>
     
-    <!-- If logged in allow user to like or comment on an article -->
-    {{#if user}}
-    <form name = "likeForm" action="/articles/{{article.id}}/like" method="POST">
-        <button type="submit" class="btn">
-            {{#if hasLiked}}Unlike{{else}}Like{{/if}}
-        </button>
-    </form>
-    {{/if}} 
+    <div id="article-content">
+        {{{article.content}}}
+    </div>
+
     <h3>Comments</h3>
     <div id="comment-form">
         {{#if user}}
@@ -44,14 +51,16 @@
         <div class="comment top-level">
             <p><strong>{{username}}</strong> <small>{{date}}</small></p>
             {{{comment}}}
-            {{#if ../user}} 
-                <button type="button" class="btn btn-reply">Reply</button>
-                {{#if canDelete}}
-                    <form action="/comments/{{id}}/delete" method="POST">
-                        <input type="hidden" name="article_id" value="{{article_id}}">
-                        <button type="submit" class="btn">Delete</button>
-                    </form>
-                {{/if}}
+            {{#if ../user}}
+                <div class="comment-actions">
+                    <button type="button" class="btn btn-reply">Reply</button>
+                    {{#if canDelete}}
+                        <form action="/comments/{{id}}/delete" method="POST" class="inline-form">
+                            <input type="hidden" name="article_id" value="{{article_id}}">
+                            <button type="submit" class="btn">Delete</button>
+                        </form>
+                    {{/if}}
+                </div>
             {{/if}}        
                 <div class="reply-form hidden">
                     <form class="quill-form" action="/articles/{{article_id}}/comment" method="POST">
@@ -70,13 +79,15 @@
                         <p><strong>{{username}}</strong> <small>{{date}}</small></p>
                         {{{comment}}}
                         {{#if ../../user}} 
-                            <button type="button" class="btn btn-reply">Reply</button>
-                            {{#if ../canDelete}}
-                                <form action="/comments/{{id}}/delete" method="POST">
-                                    <input type="hidden" name="article_id" value="{{article_id}}">
-                                    <button type="submit" class="btn">Delete</button>
-                                </form>
-                            {{/if}}
+                            <div class="comment-actions">
+                                <button type="button" class="btn btn-reply">Reply</button>
+                                {{#if canDelete}}
+                                    <form action="/comments/{{id}}/delete" method="POST" class="inline-form">
+                                        <input type="hidden" name="article_id" value="{{article_id}}">
+                                        <button type="submit" class="btn">Delete</button>
+                                    </form>
+                                {{/if}}
+                            </div>
                         {{/if}}            
                         <div class="reply-form hidden">
                             <form class="quill-form" action="/articles/{{article_id}}/comment" method="POST">
@@ -96,10 +107,12 @@
                                     <p><strong>{{username}}</strong> <small>{{date}}</small></p>
                                     {{{comment}}}
                                     {{#if ../../canDelete}}
-                                        <form action="/comments/{{id}}/delete" method="POST">
-                                            <input type="hidden" name="article_id" value="{{article_id}}">
-                                            <button type="submit" class="btn">Delete</button>
-                                        </form>
+                                        <div class="comment-actions">
+                                            <form action="/comments/{{id}}/delete" method="POST" class="inline-form">
+                                                <input type="hidden" name="article_id" value="{{article_id}}">
+                                                <button type="submit" class="btn">Delete</button>
+                                            </form>
+                                        </div>
                                     {{/if}}
                                 </div>    
                             {{/each}}

@@ -11,3 +11,4 @@ select u.name as author, a.title as title, a.content as content from articles as
 select c.comment as comment, c.created_at as date, u.username as username from users as u, comments as c where u.id = c.user_id and c.article_id = 9 order by c.created_at asc
 
 select count(*) as like_count from likes where article_id = 9
+select a.id, a.title, a.content, a.image_path, a.created_at, u.username, as author from articles as a, users as u where a.author_id = u.id and a.id = 9

@@ -41,10 +41,10 @@ async function getArticleById(id) {
     const db = await database;
 
     const article = await db.query(
-        "select * from articles where id = ?",
+        "select a.id, a.title, a.content, a.image_path, a.created_at, u.username as author from articles as a, users as u where a.author_id = u.id and a.id = ?",
         [id]);
 
-    return await article[0];
+    return article[0];
 }
 
 // Update an article in the database after editting

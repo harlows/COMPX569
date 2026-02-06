@@ -31,6 +31,7 @@ router.get("/account/dashboard", middleware.verifyAuthenticated, async function(
         myArticles = await articlesDao.getArticlesByAuthor(user.id);
     }
         res.render("account/dashboard", {
+        user,
         myArticles
     });
 });

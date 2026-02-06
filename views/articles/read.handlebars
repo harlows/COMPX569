@@ -30,9 +30,8 @@
     
     <div id="article-content">
         {{{article.content}}}
-    </div>
+    </div>   
 
-    <h3>Comments</h3>
     <div id="comment-form">
         {{#if user}}
             <form class="quill-form" action="/articles/{{article.id}}/comment" method="POST">
@@ -41,27 +40,33 @@
                 <textarea name="comment" class="quill-content" hidden></textarea>
                 <button type="submit" class="btn">Post your comment</button>
             </form>
+            {{#if comments}}
+                <button id="toggle-comments" class="btn">Hide comments</button>
+            {{/if}}
         {{/if}}
     </div>
 
+    
 
 <!-- Put into a hbs partial eventually? -->
+
 <div id="comments">
+    <h2>Comments</h2>
     {{#each comments}}
         <div class="comment top-level">
             <p><strong>{{username}}</strong> <small>{{date}}</small></p>
             {{{comment}}}
             {{#if ../user}}
-                <div class="comment-actions">
+                <div class="btn-actions">
                     <button type="button" class="btn btn-reply">Reply</button>
                     {{#if canDelete}}
-                        <form action="/comments/{{id}}/delete" method="POST" class="inline-form">
+                        <form action="/comments/{{id}}/delete" method="POST" onsubmit="return confirm('This will permanently delete your comment and any replies. Continue?')" class="inline-form">
                             <input type="hidden" name="article_id" value="{{article_id}}">
                             <button type="submit" class="btn">Delete</button>
                         </form>
                     {{/if}}
                 </div>
-            {{/if}}        
+                    
                 <div class="reply-form hidden">
                     <form class="quill-form" action="/articles/{{article_id}}/comment" method="POST">
                         <label for="content">Reply:</label>
@@ -73,22 +78,23 @@
                         <button type="submit" class="btn">Post your reply</button>
                     </form>
                 </div>
+            {{/if}}    
             {{#if replies.length}}
                 {{#each replies}}
                     <div class="comment level-2">
                         <p><strong>{{username}}</strong> <small>{{date}}</small></p>
                         {{{comment}}}
                         {{#if ../../user}} 
-                            <div class="comment-actions">
+                            <div class="btn-actions">
                                 <button type="button" class="btn btn-reply">Reply</button>
                                 {{#if canDelete}}
-                                    <form action="/comments/{{id}}/delete" method="POST" class="inline-form">
+                                    <form action="/comments/{{id}}/delete" method="POST" onsubmit="return confirm('This will permanently delete your comment and any replies. Continue?')" class="inline-form">
                                         <input type="hidden" name="article_id" value="{{article_id}}">
                                         <button type="submit" class="btn">Delete</button>
                                     </form>
                                 {{/if}}
                             </div>
-                        {{/if}}            
+                                   
                         <div class="reply-form hidden">
                             <form class="quill-form" action="/articles/{{article_id}}/comment" method="POST">
                                 <label for="content">Reply:</label>
@@ -100,15 +106,15 @@
                                 <button type="submit" class="btn">Post your reply</button>
                             </form>
                         </div>
-            
+                        {{/if}} 
                         {{#if replies.length}}
                             {{#each replies}}
                                 <div class="comment level-3">
                                     <p><strong>{{username}}</strong> <small>{{date}}</small></p>
                                     {{{comment}}}
                                     {{#if ../../canDelete}}
-                                        <div class="comment-actions">
-                                            <form action="/comments/{{id}}/delete" method="POST" class="inline-form">
+                                        <div class="btn-actions">
+                                            <form action="/comments/{{id}}/delete" method="POST" onsubmit="return confirm('This will permanently delete your comment. Continue?')" class="inline-form">
                                                 <input type="hidden" name="article_id" value="{{article_id}}">
                                                 <button type="submit" class="btn">Delete</button>
                                             </form>

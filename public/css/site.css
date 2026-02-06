@@ -1,5 +1,6 @@
 @import url(https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css);
 
+
 * {
     font-family: Verdana, Geneva, sans-serif;
     color: #706F6F;
@@ -104,7 +105,7 @@ form .form-group {
 }
 
 .form-narrow {
-    max-width: 360px;
+    min-width: 240px;
     margin: 0 auto;
 }
 
@@ -177,20 +178,8 @@ form .form-group {
   margin-top: 0.5rem;
 }
 
-.comment-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0.5rem 0;
-}
-
-.comment-actions .inline-form {
-  display: inline-flex;
-  margin: 0;
-}
-
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .flex-col, .flex-row {
@@ -270,13 +259,40 @@ a {
   background: #ddd;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #333;
+  color: #374151;
   cursor: pointer;
   text-decoration: none;
 }
 
 .btn:hover {
   background: #ccc;
+}
+
+.btn-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0.5rem 0;
+}
+
+.btn-actions .inline-form {
+  display: inline-flex;
+  margin: 0;
+}
+
+#toggle-comments {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-color: #d1d5db;
+  background: #f9fafb;
+  color: #374151;
+  margin: 1rem 0;
+}
+
+#toggle-comments:hover {
+  background: #f3f4f6;
 }

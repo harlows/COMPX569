@@ -169,7 +169,7 @@ router.post("/delete", middleware.verifyAuthenticated, async function (req, res)
     
     await articlesDao.deleteArticle(id);
     req.session.message = "Article successfully deleted.";
-    res.redirect("/");
+    res.redirect("/account/dashboard");
 });
 
 router.post("/articles/:id/comment", middleware.verifyAuthenticated, async function (req, res) {

@@ -10,8 +10,13 @@
   {{#if myArticles.length}}
     {{#each myArticles}}
     <article class="story">
-      <h3 class="story-title">{{title}}</h3>
-      <a href="/articles/{{id}}/edit" class="btn">Edit</a>
+      <h3 class="story-title"><a href="/articles/{{id}}/read">{{title}}</a></h3>
+        <div class="btn-actions">
+          <a href="/articles/{{id}}/edit" class="btn">Edit</a>
+          <form action="/delete" method="POST" onsubmit="return confirm('This will permanently delete your article. Continue?');">
+        
+         <button type="submit" name="articleId" class="btn" value="{{id}}">Delete</button>
+        </div>
     </article>
     {{/each}}
 </div>

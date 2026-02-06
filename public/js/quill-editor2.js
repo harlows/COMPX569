@@ -32,10 +32,20 @@ window.addEventListener("load", function () {
       const replyForm = comment.querySelector(".reply-form");
 
     replyForm.classList.toggle("hidden");
-    //btn.classList.toggle("hidden");
   });
+
+  // Toggle comment section visibility
+  const hideCommentsBtn = document.querySelector("#toggle-comments");
+  const comments = this.document.querySelector("#comments");
+
+  hideCommentsBtn.addEventListener("click", () => {
+      comments.classList.toggle("hidden");
+      if (comments.classList.contains("hidden")) {
+        hideCommentsBtn.textContent = "Show comments"
+      } else
+        hideCommentsBtn.textContent = "Hide comments";
+  });
+
 });
 
-  
-  
 });

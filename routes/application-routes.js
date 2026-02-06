@@ -108,7 +108,7 @@ router.post("/articles", middleware.verifyAuthenticated, upload.single("imageFil
     if (fileInfo) {
         // Move the image into the images folder
         const oldFileName = fileInfo.path;
-        newFileName = `/public/images/${fileInfo.originalname}`;
+        newFileName = `./public/images/${fileInfo.originalname}`;
         fs.renameSync(oldFileName, newFileName);
     };
     // Get form data
@@ -118,7 +118,10 @@ router.post("/articles", middleware.verifyAuthenticated, upload.single("imageFil
     
     // Create new article
     const newArticle = await articlesDao.createArticle(article);
-    res.redirect("/");
+
+    req.session.message = "Article published successfully.";
+
+    res.redirect("/account/dashboard");
 });
 
 router.get("/articles/new", middleware.verifyAuthenticated, function (req, res) {
@@ -159,7 +162,7 @@ router.post("/articles/:id/edit", middleware.verifyAuthenticated, upload.single(
 
     req.session.message = "Article republished successfully.";
 
-    res.redirect("/");
+    res.redirect("/account/dashboard");
 });
 
 // Route handler for article deletion

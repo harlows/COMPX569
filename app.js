@@ -34,6 +34,7 @@ hbs.handlebars.registerHelper('convertDate', function (date) {
   return new Date(date).toLocaleString("en-NZ");
 });
 
+result = str.slice(1);
 // Set up to read POSTed form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({}));

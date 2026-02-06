@@ -1,7 +1,9 @@
 <div class = "container">
 <div id="header">
   {{#if user}}
-
+    {{#if message}}
+      {{message}}
+    {{/if}}
   <h1>{{user.name}}'s Articles</h1>
   
 </div>

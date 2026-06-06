@@ -20,6 +20,12 @@
             <!-- Hide textarea, but still available for an Express req.body.content -->
             <textarea name="content" class="quill-content" hidden></textarea>
         </div>
+
+        <!-- Display cover image (if one exists) -->
+        {{#if article.image_path}}
+            <img src="{{article.image_path}}" style="max-width:100%;">
+        {{/if}}
+
         <div class="flex-col mb">
           <label for="inpFile">Upload cover image:</label>
           <input id="inpFile" type="file" name="imageFile" accept=".png,.jpg,.jpeg,.bmp,.gif">

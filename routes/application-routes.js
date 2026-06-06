@@ -8,6 +8,7 @@ const { buildComments } = require("../modules/build-comments.js");
 const articlesDao = require("../modules/articles-dao.js");
 const likesDao = require("../modules/likes-dao.js");
 const commentsDao = require("../modules/comments-dao.js");
+const imageGenerator = require("../modules/image-generator.js");
 
 // Whenever we navigate to /, display all articles and check if we're authenticated.
 router.get("/", async function(req, res) {
@@ -163,6 +164,28 @@ router.post("/articles/:id/edit", middleware.verifyAuthenticated, upload.single(
     req.session.message = "Article republished successfully.";
 
     res.redirect("/account/dashboard");
+});
+
+// Route handler for AI cover image generation
+router.post("/articles/:id/generate-cover", middleware.verifyAuthenticated, async function (req, res) {
+    // TODO: Add error capture
+    // Get article id and user
+    const id = Number(req.params.id);
+    const user = req.session.user;
+
+    // Get the article
+    const article = await articlesDao.getArticleById(id);
+
+    // Call image generator function
+    const imageUrl = await imageGenerator.generateCoverImage(article.title);
+    article.image_path = imageUrl;
+    // Update DB
+    await articlesDao.updateArticleById(article);
+
+    req.session.message = "AI cover image generated successfully.";
+
+    res.redirect(`/articles/${id}/edit`);
+
 });
 
 // Route handler for article deletion

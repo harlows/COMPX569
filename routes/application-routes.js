@@ -143,9 +143,14 @@ router.get("/articles/:id/edit", middleware.verifyAuthenticated, async function 
 router.post("/articles/:id/edit", middleware.verifyAuthenticated, upload.single("imageFile"), async function (req, res) {
     // Get article id
     const id = Number(req.params.id);
+    
     // Get form data
     const { title, content } = req.body;
-    let newFileName = req.body.image_path;
+    
+    // Get existing data
+    const existingArticle = await articlesDao.getArticleById(id);
+
+    let newFileName = existingArticle.image_path;
     
     if (req.file) {
         // User uploaded an image

@@ -31,7 +31,7 @@ async function generateCoverImage(title) {
     // Convert base64 to file
     const fileName = `generated-${Date.now()}.png`;
     const filePath = `./public/images/${fileName}`;
-    const publicPath = `/images/${fileName}`;
+    const publicPath = `/public/images/${fileName}`;
     const imageBuffer = Buffer.from(image.b64_json, "base64");
     fs.writeFileSync(filePath, imageBuffer);
 

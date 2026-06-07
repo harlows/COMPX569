@@ -25,4 +25,8 @@
             <button type="submit" class="btn">Publish</button>
         </div>
     </form>
+    <!-- AI image generation -->
+    <form action="/articles/{{article.id}}/generate-cover" method="POST">
+        <button type="submit" class="btn">Generate AI cover image</button>
+    </form>
 </div>

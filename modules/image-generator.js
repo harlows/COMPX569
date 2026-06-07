@@ -25,7 +25,8 @@ async function generateCoverImage(title) {
     const data = await response.json();
 
     const image = data.data[0];
-    const imageUrl = image.url;
+    const imageUrl = `data:image/png;base64,${image.b64_json}`;
+
     console.log("Generated image URL:", imageUrl);
     return imageUrl;
 

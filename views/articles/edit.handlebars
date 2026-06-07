@@ -30,16 +30,17 @@
           <label for="inpFile">Upload cover image:</label>
           <input id="inpFile" type="file" name="imageFile" accept=".png,.jpg,.jpeg,.bmp,.gif">
         </div>
-
-        <!-- AI image generation -->
-        <form action="/articles/{{article.id}}/generate-cover" method="POST">
-            <button type="submit" class="btn">Generate AI cover image</button>
-        </form>
-
-        <div class="flex-row justify-sb align-center">
+        <div class="flex-row justify-sb align-center"></div>
             <button type="submit" class="btn">Republish</button>
         </div>
+    </form>
+
+    <!-- AI image generation -->
+    <form action="/articles/{{article.id}}/generate-cover" method="POST">
+        <button type="submit" class="btn">Generate AI cover image</button>
+    </form>
     
+    <!-- Delete form -->
     <form action="/delete" method="POST" onsubmit="return confirm('This will permanently delete your article. Continue?');">
         <div class="flex-row justify-sb align-center">
          <button type="submit" name="articleId" class="btn" value="{{article.id}}">Delete</button>

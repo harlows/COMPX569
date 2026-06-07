@@ -146,19 +146,19 @@ router.post("/articles/:id/edit", middleware.verifyAuthenticated, upload.single(
     
     // Get form data
     const { title, content } = req.body;
-    
+
     // Get existing data
     const existingArticle = await articlesDao.getArticleById(id);
 
     let newFileName = existingArticle.image_path;
     
-    if (req.file) {
+    if (req.file && req.file.size > 0) {
         // User uploaded an image
         const fileInfo = req.file;
         if (fileInfo) {
             // Move the image into the images folder
             const oldFileName = fileInfo.path;
-            newFileName = `./public/images/${fileInfo.originalname}`;
+            newFileName = `/public/images/${fileInfo.originalname}`;
             fs.renameSync(oldFileName, newFileName);
         };
     };

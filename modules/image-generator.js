@@ -12,7 +12,7 @@ async function generateCoverImage(title) {
         body: JSON.stringify({
             model: "gpt-image-1",
             prompt,
-            size: "704x295"
+            size: "1024x1024"
         })
     });
 

@@ -20,7 +20,7 @@
             <!-- Hide textarea, but still available for an Express req.body.content -->
             <textarea name="content" class="quill-content" hidden></textarea>
         </div>
-
+    </form>
         <!-- Display cover image (if one exists) -->
         {{#if article.image_path}}
             <img src="{{article.image_path}}" style="max-width:100%;">
@@ -39,7 +39,6 @@
         <div class="flex-row justify-sb align-center">
             <button type="submit" class="btn">Republish</button>
         </div>
-    </form>
     
     <form action="/delete" method="POST" onsubmit="return confirm('This will permanently delete your article. Continue?');">
         <div class="flex-row justify-sb align-center">

@@ -8,8 +8,10 @@
 
 <div class="container article">
 
-    <div id="header" class="cover">
-        <img src="{{article.image_path}}">
+    <div id="header">
+        <div class="cover">
+            <img src="{{article.image_path}}">
+        </div>
         <h2>{{article.title}}</h2>
         <h3>by {{article.author}}</h3>
         <h4>{{convertDate article.created_at}}</h4>

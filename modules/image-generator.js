@@ -1,5 +1,7 @@
 // Generate AI cover image
 
+const fs = require("fs");
+
 async function generateCoverImage(title) {
     const prompt = `Create a simple blog cover image for an article titled "${title}". Clean, modern, editorial style. No text in the image.`;
 
@@ -25,10 +27,18 @@ async function generateCoverImage(title) {
     const data = await response.json();
 
     const image = data.data[0];
-    const imageUrl = `data:image/png;base64,${image.b64_json}`;
+    
+    // Convert base64 to file
+    const fileName = `generated-${Date.now()}.png`;
+    const filePath = `./public/images/${fileName}`;
 
-    console.log("Generated image URL:", imageUrl);
-    return imageUrl;
+    const imageBuffer = Buffer.from(image.b64_json, "base64");
+    fs.writeFileSync(filePath, imageBuffer);
+
+    console.log("Saved image:", filePath);
+
+    return filePath;
+
 
 }
 
